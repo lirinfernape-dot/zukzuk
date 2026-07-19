@@ -1,4 +1,4 @@
-from database import obtener_usuario, actualizar_usuario, actualizar_avatar, actualizar_biografia, actualizar_contrasena
+from backend.database import obtener_usuario, actualizar_usuario, actualizar_avatar, actualizar_biografia, actualizar_contrasena
 
 def obtener_perfil(id_usuario):
     """

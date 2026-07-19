@@ -1,11 +1,13 @@
 from flask import Blueprint, request, jsonify
-from middleware.auth_middleware import login_requerido
-from services.user_service import obtener_perfil, actualizar_perfil, actualizar_avatar_usuario, actualizar_biografia_usuario, actualizar_contrasena_usuario
-from database import get_db_connection
+from backend.middleware.auth_middleware import login_requerido
+from backend.services.user_service import (
+    obtener_perfil, actualizar_perfil, actualizar_avatar_usuario,
+    actualizar_biografia_usuario, actualizar_contrasena_usuario
+)
+from backend.database import get_db_connection
 from werkzeug.security import check_password_hash
 import uuid
 import os
-from werkzeug.utils import secure_filename
 
 users = Blueprint("users", __name__)
 
@@ -70,10 +72,6 @@ def actualizar():
 def actualizar_avatar():
     usuario_id = request.usuario["id"]
     
-    print("=== SUBIENDO AVATAR ===")
-    print(f"Usuario ID: {usuario_id}")
-    print(f"Archivos recibidos: {request.files}")
-    
     if "avatar" not in request.files:
         return jsonify({
             "correcto": False,
@@ -88,10 +86,6 @@ def actualizar_avatar():
             "mensaje": "Archivo inválido."
         }), 400
     
-    print(f"Archivo: {archivo.filename}")
-    print(f"Tamaño: {archivo.content_length}")
-    
-    # Validar extensión
     extension = archivo.filename.split(".")[-1].lower()
     if extension not in ["jpg", "jpeg", "png", "gif", "webp"]:
         return jsonify({
@@ -99,7 +93,6 @@ def actualizar_avatar():
             "mensaje": "Formato no permitido. Usa JPG, PNG, GIF o WEBP."
         }), 400
     
-    # Validar tamaño (5MB)
     archivo.seek(0, 2)
     tamanio = archivo.tell()
     archivo.seek(0)
@@ -109,51 +102,19 @@ def actualizar_avatar():
             "mensaje": "El archivo es demasiado grande (máx 5MB)."
         }), 400
     
-    # Generar nombre único
     nombre_archivo = str(uuid.uuid4()) + "." + extension
-    print(f"Nombre generado: {nombre_archivo}")
-    
-    # Crear carpeta si no existe
     carpeta = "uploads/avatars"
     os.makedirs(carpeta, exist_ok=True)
-    print(f"Carpeta: {carpeta}")
     
-    # Guardar archivo
-    ruta_completa = os.path.join(carpeta, nombre_archivo)
-    print(f"Ruta completa: {ruta_completa}")
+    ruta = os.path.join(carpeta, nombre_archivo)
+    archivo.save(ruta)
     
-    archivo.save(ruta_completa)
-    print(f"✅ Archivo guardado en: {ruta_completa}")
-    
-    # Verificar que el archivo se guardó
-    if os.path.exists(ruta_completa):
-        print(f"✅ Archivo existe: {ruta_completa}")
-        print(f"Tamaño: {os.path.getsize(ruta_completa)} bytes")
-    else:
-        print(f"❌ Error: El archivo no se guardó correctamente")
-        return jsonify({
-            "correcto": False,
-            "mensaje": "Error al guardar el archivo."
-        }), 500
-    
-    # Actualizar en base de datos
-    from services.user_service import actualizar_avatar_usuario
-    resultado = actualizar_avatar_usuario(usuario_id, nombre_archivo)
-    print(f"Actualización en BD: {resultado}")
-    
-    # Verificar que se actualizó en la BD
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT avatar FROM usuarios WHERE id = ?", (usuario_id,))
-    avatar_bd = cursor.fetchone()
-    conn.close()
-    print(f"Avatar en BD después de actualizar: {avatar_bd[0] if avatar_bd else 'None'}")
+    actualizar_avatar_usuario(usuario_id, nombre_archivo)
     
     return jsonify({
         "correcto": True,
         "mensaje": "Avatar actualizado correctamente.",
-        "avatar": nombre_archivo,
-        "url": f"http://127.0.0.1:5000/uploads/avatars/{nombre_archivo}"
+        "avatar": nombre_archivo
     })
 
 @users.route("/api/users/biografia", methods=["PUT"])

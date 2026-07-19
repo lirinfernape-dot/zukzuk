@@ -1,52 +1,40 @@
 from functools import wraps
 from flask import request, jsonify
+import jwt
+from backend.config import SECRET_KEY
 
-from utils.jwt_manager import verificar_token
-
-
-def login_requerido(func):
-
-    @wraps(func)
-    def decorador(*args, **kwargs):
-
-        autorizacion = request.headers.get("Authorization")
-
-        if autorizacion is None:
-
+def login_requerido(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        token = request.headers.get("Authorization")
+        
+        if not token:
             return jsonify({
-
                 "correcto": False,
-
-                "mensaje": "Token no enviado."
-
+                "mensaje": "Token no proporcionado"
             }), 401
-
-        if not autorizacion.startswith("Bearer "):
-
+        
+        if token.startswith("Bearer "):
+            token = token[7:]
+        
+        try:
+            datos = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            request.usuario = {
+                "id": datos["id"],
+                "nombre": datos["nombre"],
+                "correo": datos["correo"]
+            }
+        except jwt.ExpiredSignatureError:
             return jsonify({
-
                 "correcto": False,
-
-                "mensaje": "Formato de token incorrecto."
-
+                "mensaje": "Token expirado"
             }), 401
-
-        token = autorizacion.split(" ")[1]
-
-        datos = verificar_token(token)
-
-        if datos is None:
-
+        except jwt.InvalidTokenError:
             return jsonify({
-
                 "correcto": False,
-
-                "mensaje": "Token inválido o expirado."
-
+                "mensaje": "Token inválido"
             }), 401
-
-        request.usuario = datos
-
-        return func(*args, **kwargs)
-
-    return decorador
+        
+        return f(*args, **kwargs)
+    
+    return decorated_function

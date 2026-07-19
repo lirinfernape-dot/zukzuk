@@ -11,7 +11,12 @@ def get_db_connection():
     """
     Establece y retorna una conexión a la base de datos.
     """
-    db_path = os.path.join(os.path.dirname(__file__), 'zukzuk.db')
+    # En Render, usar la ruta del disco
+    if os.environ.get('RENDER'):
+        db_path = os.path.join('/opt/render/project/src/backend', 'zukzuk.db')
+    else:
+        db_path = os.path.join(os.path.dirname(__file__), 'zukzuk.db')
+    
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     return conn
@@ -27,7 +32,7 @@ def crear_tablas():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Tabla de usuarios - CON TODAS LAS COLUMNAS
+    # Tabla de usuarios
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,

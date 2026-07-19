@@ -1,6 +1,8 @@
 from flask import Blueprint, request, jsonify
-from database import crear_usuario, iniciar_sesion, obtener_usuario
-from middleware.auth_middleware import login_requerido
+import jwt
+import datetime
+from backend.database import crear_usuario, iniciar_sesion
+from backend.config import SECRET_KEY
 
 auth = Blueprint("auth", __name__)
 
@@ -46,11 +48,6 @@ def login():
         usuario, mensaje = iniciar_sesion(correo, contrasena)
         
         if usuario:
-            # Generar token JWT (simplificado)
-            import jwt
-            import datetime
-            from config import SECRET_KEY
-            
             token = jwt.encode({
                 "id": usuario["id"],
                 "nombre": usuario["nombre"],
@@ -72,31 +69,6 @@ def login():
             
     except Exception as e:
         print(f"Error en login: {e}")
-        return jsonify({
-            "correcto": False,
-            "mensaje": f"Error en el servidor: {str(e)}"
-        }), 500
-
-@auth.route("/api/perfil", methods=["GET"])
-@login_requerido
-def perfil():
-    try:
-        usuario_id = request.usuario["id"]
-        usuario = obtener_usuario(usuario_id)
-        
-        if usuario:
-            return jsonify({
-                "correcto": True,
-                "usuario": usuario
-            })
-        else:
-            return jsonify({
-                "correcto": False,
-                "mensaje": "Usuario no encontrado"
-            }), 404
-            
-    except Exception as e:
-        print(f"Error en perfil: {e}")
         return jsonify({
             "correcto": False,
             "mensaje": f"Error en el servidor: {str(e)}"
