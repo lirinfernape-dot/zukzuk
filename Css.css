@@ -1,0 +1,90 @@
+.imgnav{
+    width: 250px;
+    height: 80px;
+}
+
+.color{
+    background-color: black;
+    color: white;
+    
+}
+
+/*navar css */
+.boton-borde-inferior {
+  background-color: transparent;
+  color: #ffffff;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none; /* Elimina todos los bordes por defecto */
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease; /* Hace que la animación sea suave */
+  text-decoration: none;
+}
+
+.boton-borde-inferior:hover {
+  border-bottom: 3px solid #B2FFFF; /* Cambia el color y grosor a tu gusto */
+  text-decoration: none;
+}
+
+/* barra izquierda */
+/* Reiniciamos márgenes y establecemos el sistema de cajas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Contenedor que agrupa la barra y el contenido */
+.contenedor-principal {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Estilos de la barra lateral izquierda */
+.barra-izquierda {
+    width: 250px;
+    background-color: #212529;
+    color: white;
+    padding: 20px;
+    position: fixed; /* Mantiene la barra fija al hacer scroll */
+    height: 100vh;
+    
+}
+
+.barra-izquierda .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.barra-izquierda ul {
+    list-style: none;
+}
+
+.barra-izquierda ul li {
+    margin-bottom: 15px;
+}
+
+.barra-izquierda ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.barra-izquierda ul li a:hover {
+    background-color: #34495e;
+}
+
+/* Contenido principal (debe tener un margen izquierdo igual al ancho de la barra) */
+.contenido-principal {
+    margin-left: 250px; 
+    padding: 40px;
+    width: 100%;
+    background-color: #f4f4f4;
+}
+

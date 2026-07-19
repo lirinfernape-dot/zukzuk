@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ZukZuk - Juego</title>
+
+    <link rel="icon" href="logo.png">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="Css.css">
+
+</head>
+
+<body class="bg-dark text-white">
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-dark bg-black">
+
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html">
+
+                <img src="zukzuk.png" height="45">
+
+            </a>
+
+        </div>
+
+    </nav>
+
+    <!-- CONTENIDO -->
+
+    <div class="container mt-5">
+
+        <div class="row">
+
+            <!-- MINIATURA -->
+
+            <div class="col-md-5">
+
+                <img
+
+                    id="miniatura"
+
+                    class="img-fluid rounded shadow"
+
+                    src="default_game.png">
+
+            </div>
+
+            <!-- INFORMACIÓN -->
+
+            <div class="col-md-7">
+
+                <h1 id="nombre"></h1>
+
+                <p class="text-secondary">
+
+                    Categoría:
+
+                    <span id="categoria"></span>
+
+                </p>
+
+                <p>
+
+                    Versión:
+
+                    <span id="version"></span>
+
+                </p>
+
+                <!-- ESTADÍSTICAS -->
+
+                <div class="mb-4">
+
+                    <span class="me-4">
+
+                        👁
+
+                        <span id="visitas">0</span>
+
+                    </span>
+
+                    <span class="me-4">
+
+                        ❤️
+
+                        <span id="likes">0</span>
+
+                    </span>
+
+                    <span>
+
+                        ⭐
+
+                        <span id="favoritos">0</span>
+
+                    </span>
+
+                </div>
+
+                <!-- BOTONES -->
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <button
+
+                        id="btnLike"
+
+                        class="btn btn-danger">
+
+                        ❤️ Like
+
+                    </button>
+
+                    <button
+
+                        id="btnFavorito"
+
+                        class="btn btn-warning">
+
+                        ⭐ Favorito
+
+                    </button>
+
+                    <button
+
+                        id="jugar"
+
+                        class="btn btn-success btn-lg">
+
+                        ▶ JUGAR
+
+                    </button>
+
+                    <button 
+    id="btnReportar"
+    class="btn btn-outline-danger"
+    onclick="reportar()"
+>
+    🚨 Reportar
+</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <h3>Descripción</h3>
+
+        <p id="descripcion"></p>
+
+        <hr>
+
+        <h3>Comentarios</h3>
+
+        <div id="comentarios">
+
+            Todavía no hay comentarios.
+
+        </div>
+
+    </div>
+
+    <script src="juego.js"></script>
+
+</body>
+
+</html>

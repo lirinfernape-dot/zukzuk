@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ranking - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+    <style>
+        .rank-card {
+            background: #2d2d2d;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        .rank-card:hover {
+            transform: scale(1.02);
+            background: #3d3d3d;
+        }
+        .rank-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00d2ff;
+            width: 50px;
+            text-align: center;
+        }
+        .rank-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 15px;
+        }
+        .rank-info {
+            flex: 1;
+        }
+        .rank-stats {
+            color: #888;
+            font-size: 14px;
+        }
+        .rank-medal {
+            font-size: 30px;
+            margin-right: 10px;
+        }
+        .tab-btn {
+            background: transparent;
+            border: 2px solid #444;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 25px;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        .tab-btn.active {
+            background: #00d2ff;
+            color: #000;
+            border-color: #00d2ff;
+        }
+        .tab-btn:hover {
+            border-color: #00d2ff;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+            <div>
+                <a href="index.html" class="btn btn-outline-light btn-sm">🏠 Inicio</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- CONTENIDO -->
+    <div class="container mt-4">
+        <h2>🏆 Ranking</h2>
+        <p class="text-muted">Los mejores juegos y creadores de ZukZuk</p>
+        
+        <div class="mb-4">
+            <button class="tab-btn active" id="tabLikes" onclick="cargarRanking('likes')">
+                ❤️ Más Likes
+            </button>
+            <button class="tab-btn" id="tabVisitas" onclick="cargarRanking('visitas')">
+                👁 Más Visitados
+            </button>
+            <button class="tab-btn" id="tabCreadores" onclick="cargarRanking('creadores')">
+                👑 Mejores Creadores
+            </button>
+        </div>
+        
+        <div id="rankingList"></div>
+    </div>
+    
+    <script src="ranking.js"></script>
+</body>
+</html>

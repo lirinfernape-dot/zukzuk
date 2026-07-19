@@ -1,0 +1,351 @@
+
+
+
+
+.fondo {
+
+    background-image: url(fondologin.png);
+
+}
+
+
+
+* {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+    font-family: 'Segoe UI', Roboto, sans-serif;
+
+}
+
+
+
+body {
+
+    /* Cambié 'tu-fondo-collage.png' por 'fondologin.png' que declaraste arriba */
+
+    background-image: url('fondologin.png'); 
+
+    background-size: cover;
+
+    background-position: center;
+
+    background-attachment: fixed;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 40px 20px;
+
+}
+
+
+
+/* CUADRO PRINCIPAL QUE CRECE SOLO */
+
+.contenedor-registro {
+
+    background-color: rgba(0, 0, 0, 0.85); 
+
+    border: 2px solid #00d2ff;            
+
+    box-shadow: 0 0 25px rgba(0, 210, 255, 0.4); 
+
+    border-radius: 16px;
+
+    padding: 30px 35px;
+
+    width: 100%;
+
+    max-width: 420px;
+
+    height: auto; 
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+
+.logo-registro {
+
+    max-width: 180px;
+
+    margin: 0 auto 25px auto;
+
+    display: block;
+
+    width: 100%; /* Permite que el logo escale hacia abajo si es necesario */
+
+}
+
+
+
+form {
+
+    width: 100%;
+
+}
+
+
+
+.grupo-input {
+
+    margin-bottom: 20px;
+
+    text-align: left;
+
+}
+
+
+
+label {
+
+    display: block;
+
+    color: #00d2ff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    margin-bottom: 6px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+}
+
+
+
+input[type="text"],
+
+input[type="email"],
+
+input[type="password"],
+
+input[type="date"],
+
+select {
+
+    width: 100%;
+
+    padding: 12px 14px;
+
+    background-color: #0f1115;
+
+    border: 1px solid #1f232b;
+
+    border-radius: 8px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition: all 0.3s ease;
+
+}
+
+
+
+input:focus, select:focus {
+
+    border-color: #00d2ff;
+
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
+
+    background-color: #13161c;
+
+}
+
+
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+
+    filter: invert(1) sepia(1) saturate(5) hue-rotate(165deg);
+
+    cursor: pointer;
+
+}
+
+
+
+select option {
+
+    background-color: #0f1115;
+
+    color: #ffffff;
+
+}
+
+
+
+.btn-registro {
+
+    width: 100%;
+
+    padding: 14px;
+
+    background-color: #00d2ff;
+
+    border: none;
+
+    border-radius: 8px;
+
+    color: #000000;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-top: 10px;
+
+    transition: all 0.2s ease;
+
+}
+
+
+
+.btn-registro:hover {
+
+    background-color: #ffffff;
+
+    box-shadow: 0 0 15px #ffffff;
+
+}
+
+
+
+/* BOTÓN SUPERIOR DERECHA (Para PC) */
+
+.boton-superior-derecha {
+
+    position: fixed;
+
+    top: 20px; 
+
+    right: 20px; 
+
+    z-index: 9999; 
+
+    padding: 10px 20px;
+
+    background-color: #007bff; 
+
+    color: #fff; 
+
+    border: none;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    transition: all 0.2s ease;
+
+}
+
+
+
+
+
+/* ========================================================
+
+   ZONA RESPONSIVA (Media Queries)
+
+   ======================================================== */
+
+
+
+/* Para pantallas medianas o celulares grandes (Menos de 768px) */
+
+@media (max-width: 768px) {
+
+    body {
+
+        padding: 80px 15px 40px 15px; /* Más espacio arriba para que el botón fijo no tape el cuadro */
+
+    }
+
+}
+
+
+
+/* Para celulares pequeños (Menos de 480px) */
+
+@media (max-width: 480px) {
+
+    .contenedor-registro {
+
+        padding: 25px 20px; /* Reducimos el padding interno para ganar espacio */
+
+        border-radius: 12px; /* Bordes un poco más sutiles en pantallas chicas */
+
+    }
+
+
+
+    .logo-registro {
+
+        max-width: 140px; /* Logo ligeramente más pequeño en celular */
+
+        margin-bottom: 20px;
+
+    }
+
+
+
+    input[type="text"],
+
+    input[type="email"],
+
+    input[type="password"],
+
+    input[type="date"],
+
+    select,
+
+    .btn-registro {
+
+        font-size: 15px; /* Aumenta ligeramente el texto para que sea más fácil escribir y pulsar en celular */
+
+        padding: 14px 12px; /* Cajas un poco más altas para comodidad táctil */
+
+    }
+
+    
+
+    /* El botón de la esquina se adapta para no estorbar */
+
+    .boton-superior-derecha {
+
+        top: 10px;
+
+        right: 10px;
+
+        padding: 8px 14px;
+
+        font-size: 13px;
+
+    }
+
+} 

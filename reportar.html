@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Reportar Juego - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+</head>
+<body class="bg-dark text-white">
+    
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+        </div>
+    </nav>
+    
+    <div class="container mt-5">
+        <div class="card bg-secondary p-4" style="max-width:600px;margin:0 auto;">
+            <h3>🚨 Reportar Juego</h3>
+            <p class="text-muted">Cuéntanos qué problema tiene este juego</p>
+            
+            <form id="formReportar">
+                <div class="mb-3">
+                    <label>Motivo del reporte</label>
+                    <select class="form-control" id="motivo" required>
+                        <option value="">Selecciona un motivo...</option>
+                        <option value="Contenido inapropiado">Contenido inapropiado</option>
+                        <option value="Spam">Spam</option>
+                        <option value="No funciona">No funciona</option>
+                        <option value="Virus/Malware">Virus/Malware</option>
+                        <option value="Plagio">Plagio</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Descripción detallada</label>
+                    <textarea class="form-control" id="descripcion" rows="4" placeholder="Describe el problema en detalle..." required></textarea>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-danger">
+                        🚨 Reportar
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById("formReportar").addEventListener("submit", function(e) {
+            e.preventDefault();
+            alert("✅ Reporte enviado. Revisaremos el contenido.");
+            window.location.href = "index.html";
+        });
+    </script>
+</body>
+</html>

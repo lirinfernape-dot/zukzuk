@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Configuración - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+    <style>
+        .config-card {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .config-card h5 {
+            color: #00d2ff;
+            margin-bottom: 15px;
+        }
+        .config-card label {
+            color: #aaa;
+            font-weight: bold;
+        }
+        .config-card input, .config-card textarea, .config-card select {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: white;
+        }
+        .config-card input:focus, .config-card textarea:focus, .config-card select:focus {
+            background: #1a1a1a;
+            border-color: #00d2ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #00d2ff;
+            margin: 10px auto;
+            display: block;
+        }
+        .btn-cambiar-avatar {
+            background: #00d2ff;
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+        .btn-cambiar-avatar:hover {
+            background: #ffffff;
+        }
+        .btn-guardar {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        .btn-guardar:hover {
+            background: #218838;
+        }
+        .btn-peligro {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        .btn-peligro:hover {
+            background: #c82333;
+        }
+        .nav-tabs .nav-link {
+            color: #aaa;
+            background: transparent;
+            border: none;
+        }
+        .nav-tabs .nav-link.active {
+            color: #00d2ff;
+            background: transparent;
+            border-bottom: 3px solid #00d2ff;
+        }
+        .nav-tabs .nav-link:hover {
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+            <div>
+                <a href="perfil.html" class="btn btn-outline-light btn-sm">⬅ Volver al Perfil</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- CONTENIDO -->
+    <div class="container mt-4">
+        <h2>⚙️ Configuración de Cuenta</h2>
+        <p class="text-muted">Administra tu perfil y configuración personal</p>
+        
+        <!-- Tabs -->
+        <ul class="nav nav-tabs mb-4" id="configTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#perfil">👤 Perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#avatar">🖼 Avatar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#seguridad">🔒 Seguridad</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#cuenta">📱 Cuenta</a>
+            </li>
+        </ul>
+        
+        <div class="tab-content">
+            <!-- TAB PERFIL -->
+            <div class="tab-pane fade show active" id="perfil">
+                <div class="config-card">
+                    <h5>📝 Información Personal</h5>
+                    <form id="formPerfil">
+                        <div class="mb-3">
+                            <label>Nombre de Usuario</label>
+                            <input type="text" class="form-control" id="nombre" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label>Correo Electrónico</label>
+                            <input type="email" class="form-control" id="correo" disabled>
+                            <small class="text-muted">El correo no se puede cambiar</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label>Género</label>
+                            <select class="form-control" id="genero">
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="No decirlo">Prefiero no decirlo</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label>Biografía</label>
+                            <textarea class="form-control" id="biografia" rows="4" placeholder="Escribe algo sobre ti..."></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label>Fecha de Nacimiento</label>
+                            <input type="date" class="form-control" id="fechaNacimiento" disabled>
+                            <small class="text-muted">La fecha de nacimiento no se puede cambiar</small>
+                        </div>
+                        
+                        <button type="submit" class="btn-guardar">💾 Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- TAB AVATAR -->
+<!-- En la pestaña Avatar -->
+<div class="tab-pane fade" id="avatar">
+    <div class="config-card text-center">
+        <h5>🖼 Cambiar Avatar</h5>
+        <img id="avatarPreview" class="avatar-preview" src="default_avatar.png" alt="Avatar">
+        <!-- Asegúrate de que el id sea "avatarPreview" -->
+        <form id="formAvatar" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="avatarInput" class="btn-cambiar-avatar">
+                    📁 Seleccionar Imagen
+                </label>
+                <input type="file" id="avatarInput" accept="image/*" style="display:none;" required>
+            </div>
+            <p class="text-muted small">Formatos: JPG, PNG, GIF, WEBP (máx 5MB)</p>
+            <button type="submit" class="btn-guardar">🔄 Actualizar Avatar</button>
+        </form>
+    </div>
+</div>
+            
+            <!-- TAB SEGURIDAD -->
+            <div class="tab-pane fade" id="seguridad">
+                <div class="config-card">
+                    <h5>🔒 Cambiar Contraseña</h5>
+                    <form id="formPassword">
+                        <div class="mb-3">
+                            <label>Contraseña Actual</label>
+                            <input type="password" class="form-control" id="passwordActual" required placeholder="Ingresa tu contraseña actual">
+                        </div>
+                        <div class="mb-3">
+                            <label>Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="passwordNueva" required placeholder="Mínimo 6 caracteres">
+                        </div>
+                        <div class="mb-3">
+                            <label>Confirmar Nueva Contraseña</label>
+                            <input type="password" class="form-control" id="passwordConfirmar" required placeholder="Repite la nueva contraseña">
+                        </div>
+                        <button type="submit" class="btn-guardar">🔑 Cambiar Contraseña</button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- TAB CUENTA -->
+            <div class="tab-pane fade" id="cuenta">
+                <div class="config-card">
+                    <h5>📱 Información de la Cuenta</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>🆔 ID:</strong> <span id="userId"></span></p>
+                            <p><strong>📅 Fecha de Registro:</strong> <span id="fechaRegistro"></span></p>
+                            <p><strong>⭐ Nivel:</strong> <span id="nivelUsuario"></span></p>
+                            <p><strong>🪙 Monedas:</strong> <span id="monedasUsuario"></span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>🎮 Juegos Creados:</strong> <span id="totalJuegos"></span></p>
+                            <p><strong>👥 Amigos:</strong> <span id="totalAmigos"></span></p>
+                            <p><strong>🏅 Logros:</strong> <span id="totalLogros"></span></p>
+                            <p><strong>❤️ Likes Recibidos:</strong> <span id="totalLikes"></span></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="text-center">
+                        <h6 class="text-danger">⚠️ Zona Peligrosa</h6>
+                        <p class="text-muted small">Eliminar tu cuenta es una acción irreversible</p>
+                        <button class="btn-peligro" onclick="eliminarCuenta()">🗑 Eliminar Cuenta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="configuracion.js"></script>
+</body>
+</html>

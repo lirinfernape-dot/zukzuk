@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ZukZuk</title>
+
+    <link rel="icon" href="logo.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="registrocss.css">
+</head>
+
+<body class="fondo">
+
+    <a class="boton-superior-derecha btn btn-primary" href="login.html">
+        Iniciar Sesión
+    </a>
+
+    <div class="contenedor-centrado">
+
+        <div class="mi-cuadro">
+
+            <img src="zukzuk.png" class="mi-imagen-arriba">
+
+            <form id="formRegistro">
+
+                <div class="grupo-input">
+                    <label>Nombre de Usuario</label>
+                    <input
+                        type="text"
+                        id="nombre"
+                        placeholder="Ej. BloxMaster"
+                        required>
+                </div>
+
+                <div class="grupo-input">
+                    <label>Correo Electrónico</label>
+                    <input
+                        type="email"
+                        id="correo"
+                        placeholder="tu@correo.com"
+                        required>
+                </div>
+
+                <div class="grupo-input">
+                    <label>Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        required>
+                </div>
+
+                <div class="grupo-input">
+                    <label>Fecha de Nacimiento</label>
+                    <input
+                        type="date"
+                        id="fechaNacimiento"
+                        required>
+                </div>
+
+                <div class="grupo-input">
+                    <label>Género</label>
+
+                    <select id="genero" required>
+
+                        <option value="">Selecciona...</option>
+
+                        <option value="Masculino">Masculino</option>
+
+                        <option value="Femenino">Femenino</option>
+
+                        <option value="No decirlo">Prefiero no decirlo</option>
+
+                    </select>
+
+                </div>
+
+                <div class="d-grid mt-4">
+
+                    <button
+                        class="btn btn-primary btn-registro"
+                        type="submit">
+
+                        Registrarse
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="registro.js"></script>
+
+</body>
+</html>

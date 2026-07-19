@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Estadísticas - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+    <style>
+        .stat-card {
+            background: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.1);
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            color: #00d2ff;
+        }
+        .stat-label {
+            color: #888;
+            margin-top: 5px;
+        }
+        .stat-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+            <div>
+                <a href="index.html" class="btn btn-outline-light btn-sm">🏠 Inicio</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2>📊 Mis Estadísticas</h2>
+        <p class="text-muted">Resumen de tu actividad en ZukZuk</p>
+        
+        <div class="row" id="estadisticas">
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-number" id="totalJuegos">0</div>
+                    <div class="stat-label">Juegos Creados</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">❤️</div>
+                    <div class="stat-number" id="totalLikes">0</div>
+                    <div class="stat-label">Likes Recibidos</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">👁</div>
+                    <div class="stat-number" id="totalVisitas">0</div>
+                    <div class="stat-label">Visitas Recibidas</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-number" id="totalAmigos">0</div>
+                    <div class="stat-label">Amigos</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">🏅</div>
+                    <div class="stat-number" id="totalLogros">0</div>
+                    <div class="stat-label">Logros</div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-number" id="totalFavoritos">0</div>
+                    <div class="stat-label">Favoritos Recibidos</div>
+                </div>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <h4 class="mt-4">📈 Top Juegos</h4>
+        <div id="topJuegos"></div>
+    </div>
+    
+    <script src="estadisticas.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ZukZuk</title>
+
+    <link rel="icon" href="logo.png" type="image/x-icon">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="registrocss.css">
+</head>
+
+<body class="fondo">
+
+    <a class="boton-superior-derecha btn btn-primary" href="registro.html">
+        Registrarse
+    </a>
+
+    <div class="contenedor-centrado">
+
+        <div class="mi-cuadro">
+
+            <img src="zukzuk.png" alt="Logo" class="mi-imagen-arriba">
+
+            <form id="formLogin">
+
+                <div class="grupo-input">
+                    <label>Correo Electrónico</label>
+                    <input
+                        type="email"
+                        id="correo"
+                        placeholder="tu@correo.com"
+                        required>
+                </div>
+
+                <div class="grupo-input">
+                    <label>Contraseña</label>
+                    <input
+                        type="password"
+                        id="contrasena"
+                        placeholder="••••••••"
+                        required>
+                </div>
+
+                <div class="d-grid gap-2 mt-3">
+                    <button class="btn btn-primary btn-registro" type="submit">
+                        Iniciar Sesión
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="login.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logros - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+    <style>
+        .achievement-card {
+            background: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            height: 100%;
+            border: 2px solid #444;
+        }
+        .achievement-card.unlocked {
+            border-color: #ffd700;
+            background: #3d3d3d;
+        }
+        .achievement-card.locked {
+            opacity: 0.5;
+            filter: grayscale(1);
+        }
+        .achievement-card .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .achievement-card .points {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        .achievement-card .fecha {
+            color: #888;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+            <div>
+                <a href="index.html" class="btn btn-outline-light btn-sm">🏠 Inicio</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+        <h2>🏅 Logros</h2>
+        <p class="text-muted">Desbloquea logros completando desafíos</p>
+        
+        <div class="row" id="listaLogros"></div>
+    </div>
+    
+    <script src="logros.js"></script>
+</body>
+</html>

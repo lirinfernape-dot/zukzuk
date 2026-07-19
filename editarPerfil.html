@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Editar Perfil - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="Css.css">
+    <style>
+        .edit-card {
+            background: #2d2d2d;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .edit-card label {
+            color: #00d2ff;
+            font-weight: bold;
+        }
+        .edit-card input, .edit-card textarea {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: white;
+        }
+        .edit-card input:focus, .edit-card textarea:focus {
+            background: #1a1a1a;
+            border-color: #00d2ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-dark text-white">
+    
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-dark bg-black">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="zukzuk.png" height="45">
+            </a>
+            <div>
+                <a href="perfil.html" class="btn btn-outline-light btn-sm">⬅ Volver</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- CONTENIDO -->
+    <div class="container mt-4">
+        <div class="edit-card">
+            <h2 class="text-center mb-4">✏️ Editar Perfil</h2>
+            
+            <form id="formEditarPerfil">
+                <div class="mb-3">
+                    <label>Nombre de Usuario</label>
+                    <input type="text" class="form-control" id="nombre" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Género</label>
+                    <select class="form-control" id="genero">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Femenino">Femenino</option>
+                        <option value="No decirlo">Prefiero no decirlo</option>
+                    </select>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Biografía</label>
+                    <textarea class="form-control" id="biografia" rows="4" placeholder="Escribe algo sobre ti..."></textarea>
+                </div>
+                
+                <div class="mb-3">
+                    <label>Avatar</label>
+                    <input type="file" class="form-control" id="avatar" accept="image/*">
+                    <small class="text-muted">Selecciona una imagen para tu avatar</small>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-success">
+                        💾 Guardar Cambios
+                    </button>
+                </div>
+            </form>
+            
+            <hr>
+            
+            <div class="text-center">
+                <p class="text-muted">¿Quieres cambiar tu contraseña?</p>
+                <button class="btn btn-warning btn-sm" onclick="cambiarContrasena()">
+                    🔑 Cambiar Contraseña
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="editarPerfil.js"></script>
+</body>
+</html>

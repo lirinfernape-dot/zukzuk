@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Jugando - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { margin: 0; padding: 0; background: #1a1a1a; }
+        .game-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .game-frame {
+            flex: 1;
+            border: none;
+            background: #000;
+        }
+        .game-header {
+            background: #2d2d2d;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+        .btn-salir {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-salir:hover { background: #c82333; }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h5 id="gameTitle">Cargando juego...</h5>
+            <button class="btn-salir" onclick="salir()">✕ Salir</button>
+        </div>
+        <iframe id="gameFrame" class="game-frame" src="about:blank"></iframe>
+    </div>
+    <script src="jugar.js"></script>
+</body>
+</html>

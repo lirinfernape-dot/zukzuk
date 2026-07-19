@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="registrocss.css">
+<title>Crear Juego | ZukZuk</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+<div class="container mt-5">
+
+<div class="card p-4">
+
+<h2>Crear un nuevo juego</h2>
+
+<hr>
+
+<div class="mb-3">
+
+<label>Nombre del juego</label>
+
+<input
+id="nombre"
+class="form-control"
+placeholder="Mi primer juego">
+
+</div>
+
+<div class="mb-3">
+
+<label>Descripción</label>
+
+<textarea
+
+id="descripcion"
+
+rows="5"
+
+class="form-control"
+
+placeholder="Describe tu juego"
+
+></textarea>
+
+</div>
+
+<div class="mb-3">
+
+    <label class="form-label">
+
+        Categoría
+
+    </label>
+
+    <select
+        id="categoria"
+        class="form-select">
+
+        <option value="Acción">Acción</option>
+
+        <option value="Aventura">Aventura</option>
+
+        <option value="Carreras">Carreras</option>
+
+        <option value="RPG">RPG</option>
+
+        <option value="Terror">Terror</option>
+
+        <option value="Shooter">Shooter</option>
+
+        <option value="Sandbox">Sandbox</option>
+
+        <option value="Supervivencia">Supervivencia</option>
+
+        <option value="Simulación">Simulación</option>
+
+        <option value="Estrategia">Estrategia</option>
+
+    </select>
+
+</div>
+
+
+<div class="mb-3">
+
+<label class="form-label">
+
+Miniatura
+
+</label>
+
+<input
+
+type="file"
+
+id="miniatura"
+
+accept="image/*"
+
+class="form-control"
+
+>
+
+</div>
+
+<div class="mb-3">
+
+    <label class="form-label">
+
+        Archivo del juego (.zip)
+
+    </label>
+
+    <input
+        type="file"
+        id="archivoJuego"
+        class="form-control"
+        accept=".zip">
+
+</div>
+
+<div class="d-grid">
+
+<button
+
+class="btn btn-success"
+
+onclick="crearJuego()"
+
+>
+
+Crear Juego
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="crearjuego.js"></script>
+
+</body>
+</html>
