@@ -45,27 +45,14 @@ def cargar_personaje():
     return jsonify({
         "correcto": True,
         "personaje": {
-            "skin_color": "#F5D0B8",
-            "hair_style": "default",
-            "hair_color": "#4A2F1A",
-            "eye_color": "#5C3D2E",
-            "shirt_color": "#3B82F6",
-            "pants_color": "#1E3A5F",
-            "shoes_color": "#2D2D2D",
-            "hat_style": "none",
-            "glasses_style": "none",
-            "body_type": "normal",
-            "gender_avatar": "male"
+            "gender": "male",
+            "skin": "#F5D0B8",
+            "hair": "short",
+            "hairColor": "#4A2F1A",
+            "shirt": "#3B82F6",
+            "pants": "#1E3A5F",
+            "shoes": "#2D2D2D",
+            "hat": "none",
+            "glasses": "none"
         }
-    })
-
-@avatar_customizer.route("/api/avatar/preview", methods=["POST"])
-@login_requerido
-def generar_preview():
-    datos = request.get_json()
-    # Generar URL del avatar con los parámetros
-    # Esto se puede integrar con un servicio como Roblox Avatar API o generar SVG
-    return jsonify({
-        "correcto": True,
-        "url": f"/avatar-preview?{datos}"
     })
