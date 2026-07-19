@@ -1,11 +1,9 @@
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, send_file
 from flask_cors import CORS
 import os
 
 from backend.config import HOST, PORT, DEBUG
-
 from backend.database import crear_tablas
-
 from backend.routes.auth import auth
 from backend.routes.games import games
 from backend.routes.users import users
@@ -20,7 +18,7 @@ from backend.routes.events import events
 from backend.routes.stats import stats
 from backend.routes.admin import admin
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='.', static_url_path='')
 
 # Configurar CORS
 CORS(app, resources={
@@ -50,19 +48,26 @@ app.register_blueprint(stats)
 app.register_blueprint(admin)
 
 # ==========================================
-# RUTA PRINCIPAL
+# RUTA PRINCIPAL - SIRVE index.html
 # ==========================================
 
-@app.route("/")
-def inicio():
-    return jsonify({
-        "estado": "online",
-        "mensaje": "Backend de ZukZuk",
-        "version": "1.0.0"
-    })
+@app.route('/')
+def index():
+    return send_file('index.html')
 
 # ==========================================
-# SERVIR ARCHIVOS
+# SERVIR ARCHIVOS ESTÁTICOS (HTML, CSS, JS, PNG)
+# ==========================================
+
+@app.route('/<path:path>')
+def static_files(path):
+    if os.path.exists(path):
+        return send_file(path)
+    else:
+        return jsonify({"correcto": False, "mensaje": "Recurso no encontrado"}), 404
+
+# ==========================================
+# SERVIR ARCHIVOS SUBIDOS
 # ==========================================
 
 @app.route("/uploads/<path:archivo>")
