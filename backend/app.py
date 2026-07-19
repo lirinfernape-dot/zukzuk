@@ -3,26 +3,26 @@ from flask_cors import CORS
 import os
 import sys
 
-# Agregar el directorio raíz del proyecto al path de Python
+# Agregar el directorio backend al path de Python
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'backend'))
 
-# Ahora importamos desde la raíz
-from config import HOST, PORT, DEBUG
-from database import crear_tablas
-from routes.auth import auth
-from routes.games import games
-from routes.users import users
-from routes.friends import friends
-from routes.avatar import avatar
-from routes.notifications import notifications
-from routes.ranking import ranking
-from routes.messages import messages
-from routes.shop import shop
-from routes.achievements import achievements
-from routes.events import events
-from routes.stats import stats
-from routes.admin import admin
+# Importar desde backend (YA NO from config, sino from backend.config)
+from backend.config import HOST, PORT, DEBUG
+from backend.database import crear_tablas
+from backend.routes.auth import auth
+from backend.routes.games import games
+from backend.routes.users import users
+from backend.routes.friends import friends
+from backend.routes.avatar import avatar
+from backend.routes.notifications import notifications
+from backend.routes.ranking import ranking
+from backend.routes.messages import messages
+from backend.routes.shop import shop
+from backend.routes.achievements import achievements
+from backend.routes.events import events
+from backend.routes.stats import stats
+from backend.routes.admin import admin
 
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path='')
 
@@ -58,14 +58,13 @@ app.register_blueprint(stats)
 app.register_blueprint(admin)
 
 # ==========================================
-# RUTA PRINCIPAL - SIRVE index.html desde la raíz
+# RUTA PRINCIPAL - SIRVE index.html
 # ==========================================
 
 @app.route('/')
 def index():
     try:
         index_path = os.path.join(BASE_DIR, 'index.html')
-        print(f"Buscando index.html en: {index_path}")
         if os.path.exists(index_path):
             return send_file(index_path)
         else:
@@ -75,7 +74,7 @@ def index():
         return jsonify({"correcto": False, "mensaje": "Error al cargar la página"}), 500
 
 # ==========================================
-# SERVIR ARCHIVOS ESTÁTICOS (HTML, CSS, JS, PNG)
+# SERVIR ARCHIVOS ESTÁTICOS
 # ==========================================
 
 @app.route('/<path:path>')
@@ -94,16 +93,15 @@ def static_files(path):
 # SERVIR ARCHIVOS SUBIDOS
 # ==========================================
 
-@app.route("/uploads/<path:archivo>")
-def uploads(archivo):
+@app.route("/uploads/avatars/<path:archivo>")
+def uploads_avatars(archivo):
     try:
-        uploads_path = os.path.join(BASE_DIR, "uploads")
+        uploads_path = os.path.join(BASE_DIR, "uploads/avatars")
         return send_from_directory(uploads_path, archivo)
     except FileNotFoundError:
-        return jsonify({"correcto": False, "mensaje": "Archivo no encontrado"}), 404
+        return jsonify({"correcto": False, "mensaje": "Avatar no encontrado"}), 404
     except Exception as e:
-        print(f"Error al servir uploads: {e}")
-        return jsonify({"correcto": False, "mensaje": "Error al servir archivo"}), 500
+        return jsonify({"correcto": False, "mensaje": "Error al servir avatar"}), 500
 
 @app.route("/uploads/juegos/<path:archivo>")
 def uploads_juegos(archivo):
@@ -113,7 +111,6 @@ def uploads_juegos(archivo):
     except FileNotFoundError:
         return jsonify({"correcto": False, "mensaje": "Archivo no encontrado"}), 404
     except Exception as e:
-        print(f"Error al servir juegos: {e}")
         return jsonify({"correcto": False, "mensaje": "Error al servir archivo"}), 500
 
 @app.route("/uploads/juegos/miniaturas/<path:archivo>")
@@ -122,20 +119,18 @@ def uploads_miniaturas(archivo):
         uploads_path = os.path.join(BASE_DIR, "uploads/juegos/miniaturas")
         return send_from_directory(uploads_path, archivo)
     except FileNotFoundError:
-        return jsonify({"correcto": False, "mensaje": "Archivo no encontrado"}), 404
+        return jsonify({"correcto": False, "mensaje": "Miniatura no encontrada"}), 404
     except Exception as e:
-        print(f"Error al servir miniaturas: {e}")
-        return jsonify({"correcto": False, "mensaje": "Error al servir archivo"}), 500
+        return jsonify({"correcto": False, "mensaje": "Error al servir miniatura"}), 500
 
-@app.route("/uploads/avatars/<path:archivo>")
-def uploads_avatars(archivo):
+@app.route("/uploads/<path:archivo>")
+def uploads(archivo):
     try:
-        uploads_path = os.path.join(BASE_DIR, "uploads/avatars")
+        uploads_path = os.path.join(BASE_DIR, "uploads")
         return send_from_directory(uploads_path, archivo)
     except FileNotFoundError:
         return jsonify({"correcto": False, "mensaje": "Archivo no encontrado"}), 404
     except Exception as e:
-        print(f"Error al servir avatars: {e}")
         return jsonify({"correcto": False, "mensaje": "Error al servir archivo"}), 500
 
 # ==========================================
