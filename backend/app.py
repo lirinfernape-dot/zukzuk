@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, send_from_directory, send_file
+from flask import Flask, jsonify, send_from_directory, send_file, request
 from flask_cors import CORS
 import os
 import sys
@@ -27,25 +27,10 @@ from backend.routes.admin import admin
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path='')
 
 # ==========================================
-# CONFIGURACIÓN CORS CORREGIDA
+# CONFIGURACIÓN CORS - VERSIÓN MANUAL
 # ==========================================
-CORS(app, resources={
-    r"/api/*": {
-        "origins": "*",
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
-        "allow_headers": ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-        "expose_headers": ["Content-Type", "Authorization"],
-        "supports_credentials": True,
-        "max_age": 3600
-    },
-    r"/uploads/*": {
-        "origins": "*",
-        "methods": ["GET", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
-    }
-})
 
-# También permitir CORS para todas las rutas (fallback)
+# Permitir CORS para todas las solicitudes
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Origin', '*')
@@ -54,9 +39,20 @@ def after_request(response):
     response.headers.add('Access-Control-Allow-Credentials', 'true')
     return response
 
-# Manejar preflight requests (OPTIONS)
+# Manejar solicitudes OPTIONS (preflight) para todas las rutas
 @app.route('/api/<path:path>', methods=['OPTIONS'])
-def handle_options(path):
+@app.route('/api', methods=['OPTIONS'])
+def handle_options(path=None):
+    response = jsonify({"message": "OK"})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization,Accept,Origin,X-Requested-With")
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS,PATCH")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
+    return response, 200
+
+# También manejar OPTIONS en la raíz
+@app.route('/', methods=['OPTIONS'])
+def handle_root_options():
     response = jsonify({"message": "OK"})
     response.headers.add("Access-Control-Allow-Origin", "*")
     response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization,Accept,Origin,X-Requested-With")
