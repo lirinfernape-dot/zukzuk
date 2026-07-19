@@ -7,7 +7,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'backend'))
 
-# Importar desde backend (YA NO from config, sino from backend.config)
+# Importar desde backend
 from backend.config import HOST, PORT, DEBUG
 from backend.database import crear_tablas
 from backend.routes.auth import auth
@@ -26,14 +26,43 @@ from backend.routes.admin import admin
 
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path='')
 
-# Configurar CORS
+# ==========================================
+# CONFIGURACIÓN CORS CORREGIDA
+# ==========================================
 CORS(app, resources={
     r"/api/*": {
         "origins": "*",
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+        "allow_headers": ["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
+        "expose_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True,
+        "max_age": 3600
+    },
+    r"/uploads/*": {
+        "origins": "*",
+        "methods": ["GET", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
     }
 })
+
+# También permitir CORS para todas las rutas (fallback)
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization,Accept,Origin,X-Requested-With')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS,PATCH')
+    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    return response
+
+# Manejar preflight requests (OPTIONS)
+@app.route('/api/<path:path>', methods=['OPTIONS'])
+def handle_options(path):
+    response = jsonify({"message": "OK"})
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization,Accept,Origin,X-Requested-With")
+    response.headers.add("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS,PATCH")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
+    return response, 200
 
 # Crear tablas
 try:
@@ -134,17 +163,29 @@ def uploads(archivo):
         return jsonify({"correcto": False, "mensaje": "Error al servir archivo"}), 500
 
 # ==========================================
+# RUTA DE PRUEBA PARA VERIFICAR CORS
+# ==========================================
+
+@app.route('/api/test')
+def test():
+    return jsonify({"estado": "online", "mensaje": "CORS funcionando correctamente"})
+
+# ==========================================
 # MANEJADORES DE ERRORES
 # ==========================================
 
 @app.errorhandler(404)
 def not_found(error):
-    return jsonify({"correcto": False, "mensaje": "Recurso no encontrado"}), 404
+    response = jsonify({"correcto": False, "mensaje": "Recurso no encontrado"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 404
 
 @app.errorhandler(500)
 def internal_error(error):
     print(f"Error 500: {error}")
-    return jsonify({"correcto": False, "mensaje": "Error interno del servidor"}), 500
+    response = jsonify({"correcto": False, "mensaje": "Error interno del servidor"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response, 500
 
 # ==========================================
 # INICIO
