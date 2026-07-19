@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Amigos - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -7,7 +12,7 @@ if (!token) {
 
 async function cargarAmigos() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/friends", {
+        const respuesta = await fetch(`${API_URL}/api/friends`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -27,11 +32,15 @@ async function cargarAmigos() {
         }
         
         amigos.forEach(amigo => {
+            const avatarUrl = amigo.avatar && amigo.avatar !== "default_avatar.png"
+                ? `${API_URL}/uploads/avatars/${amigo.avatar}`
+                : 'default_avatar.png';
+            
             contenedor.innerHTML += `
                 <div class="friend-card">
                     <div class="d-flex align-items-center">
                         <img 
-                            src="http://127.0.0.1:5000/uploads/avatars/${amigo.avatar || 'default_avatar.png'}"
+                            src="${avatarUrl}"
                             class="friend-avatar"
                             onerror="this.src='default_avatar.png'"
                         >
@@ -50,7 +59,7 @@ async function cargarAmigos() {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando amigos:", error);
         document.getElementById("listaAmigos").innerHTML = `
             <div class="alert alert-danger">
                 No se pudieron cargar los amigos.
@@ -67,7 +76,7 @@ async function eliminarAmigo(amigoId) {
     if (!confirm("¿Deseas eliminar este amigo?")) return;
     
     try {
-        const respuesta = await fetch(`http://127.0.0.1:5000/api/friends/remove/${amigoId}`, {
+        const respuesta = await fetch(`${API_URL}/api/friends/remove/${amigoId}`, {
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + token
@@ -79,7 +88,7 @@ async function eliminarAmigo(amigoId) {
         cargarAmigos();
         
     } catch (error) {
-        console.error(error);
+        console.error("Error eliminando amigo:", error);
         alert("Error al eliminar amigo.");
     }
 }

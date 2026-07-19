@@ -1,9 +1,9 @@
-const formulario = document.querySelector("form");
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
 
-// Cargar configuración
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://127.0.0.1:5000'
-    : 'https://zukzuk-olcn.onrender.com';
+console.log('Login - API_URL:', API_URL);
+
+const formulario = document.querySelector("form");
 
 formulario.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -12,7 +12,10 @@ formulario.addEventListener("submit", async function (e) {
     const contrasena = document.getElementById("contrasena").value;
 
     try {
-        const respuesta = await fetch(`${API_URL}/api/login`, {
+        const url = `${API_URL}/api/login`;
+        console.log('Enviando login a:', url);
+
+        const respuesta = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -24,6 +27,7 @@ formulario.addEventListener("submit", async function (e) {
         });
 
         const datos = await respuesta.json();
+        console.log('Respuesta login:', datos);
 
         if (datos.correcto) {
             localStorage.setItem("usuario", JSON.stringify(datos.usuario));
@@ -35,6 +39,6 @@ formulario.addEventListener("submit", async function (e) {
         }
     } catch (error) {
         console.error("Error en login:", error);
-        alert("No se pudo conectar con el servidor. Verifica tu conexión.");
+        alert("No se pudo conectar con el servidor. Error: " + error.message);
     }
 });

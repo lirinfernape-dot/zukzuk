@@ -1,7 +1,7 @@
-// Cargar configuración
-const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://127.0.0.1:5000'
-    : 'https://zukzuk-olcn.onrender.com';
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Index - API_URL:', API_URL);
 
 async function cargarJuegos() {
     try {

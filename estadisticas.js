@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Estadísticas - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -7,7 +12,7 @@ if (!token) {
 
 async function cargarEstadisticas() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/stats/user", {
+        const respuesta = await fetch(`${API_URL}/api/stats/user`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -22,18 +27,17 @@ async function cargarEstadisticas() {
         document.getElementById("totalAmigos").textContent = stats.total_amigos || 0;
         document.getElementById("totalLogros").textContent = stats.total_logros || 0;
         
-        // Cargar top juegos
         cargarTopJuegos();
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando estadísticas:", error);
         alert("No se pudieron cargar las estadísticas.");
     }
 }
 
 async function cargarTopJuegos() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/mygames", {
+        const respuesta = await fetch(`${API_URL}/api/mygames`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -52,7 +56,6 @@ async function cargarTopJuegos() {
             return;
         }
         
-        // Ordenar por visitas
         const top = juegos.sort((a, b) => b.visitas - a.visitas).slice(0, 5);
         
         top.forEach((juego, index) => {
@@ -61,7 +64,7 @@ async function cargarTopJuegos() {
                 <div class="d-flex align-items-center bg-secondary p-2 mb-2 rounded">
                     <span class="me-3" style="width:40px;">${medalla}</span>
                     <span class="flex-grow-1">${juego.nombre}</span>
-                    <span class="text-muted">👁 ${juego.visitas} ❤️ ${juego.likes}</span>
+                    <span class="text-muted">👁 ${juego.visitas || 0} ❤️ ${juego.likes || 0}</span>
                     <button class="btn btn-sm btn-success ms-2" onclick="verJuego(${juego.id})">
                         Ver
                     </button>
@@ -70,7 +73,12 @@ async function cargarTopJuegos() {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando top juegos:", error);
+        document.getElementById("topJuegos").innerHTML = `
+            <div class="alert alert-secondary">
+                No se pudieron cargar los juegos.
+            </div>
+        `;
     }
 }
 

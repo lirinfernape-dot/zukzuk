@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Mensajes - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -15,8 +20,8 @@ async function cargarMensajes(tipo) {
     
     try {
         const url = tipo === 'inbox' 
-            ? "http://127.0.0.1:5000/api/messages/inbox"
-            : "http://127.0.0.1:5000/api/messages/sent";
+            ? `${API_URL}/api/messages/inbox`
+            : `${API_URL}/api/messages/sent`;
         
         const respuesta = await fetch(url, {
             headers: {
@@ -40,12 +45,15 @@ async function cargarMensajes(tipo) {
         mensajes.forEach(msg => {
             const avatar = tipo === 'inbox' ? msg.remitente_avatar : 'default_avatar.png';
             const nombre = tipo === 'inbox' ? msg.remitente_nombre : msg.destinatario_nombre;
+            const avatarUrl = avatar && avatar !== "default_avatar.png"
+                ? `${API_URL}/uploads/avatars/${avatar}`
+                : 'default_avatar.png';
             
             contenedor.innerHTML += `
                 <div class="msg-card ${msg.leido ? 'leido' : ''}" onclick="verMensaje(${msg.id})">
                     <div class="d-flex align-items-center">
                         <img 
-                            src="http://127.0.0.1:5000/uploads/avatars/${avatar || 'default_avatar.png'}"
+                            src="${avatarUrl}"
                             class="msg-avatar"
                             onerror="this.src='default_avatar.png'"
                         >
@@ -63,7 +71,7 @@ async function cargarMensajes(tipo) {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando mensajes:", error);
         document.getElementById("listaMensajes").innerHTML = `
             <div class="alert alert-danger">
                 No se pudieron cargar los mensajes.
@@ -73,15 +81,12 @@ async function cargarMensajes(tipo) {
 }
 
 function verMensaje(id) {
-    // Marcar como leído
-    fetch(`http://127.0.0.1:5000/api/messages/${id}/read`, {
+    fetch(`${API_URL}/api/messages/${id}/read`, {
         method: "PUT",
         headers: {
             Authorization: "Bearer " + token
         }
     });
-    
-    // Recargar mensajes
     cargarMensajes(tipoActual);
 }
 
@@ -97,7 +102,7 @@ function nuevoMensaje() {
 
 async function enviarMensaje(destinatarioId, mensaje) {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/messages/send", {
+        const respuesta = await fetch(`${API_URL}/api/messages/send`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -117,7 +122,7 @@ async function enviarMensaje(destinatarioId, mensaje) {
         }
         
     } catch (error) {
-        console.error(error);
+        console.error("Error enviando mensaje:", error);
         alert("Error al enviar mensaje.");
     }
 }

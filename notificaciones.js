@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Notificaciones - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -7,7 +12,7 @@ if (!token) {
 
 async function cargarNotificaciones() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/notifications", {
+        const respuesta = await fetch(`${API_URL}/api/notifications`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -60,7 +65,7 @@ async function cargarNotificaciones() {
             `${noLeidas} notificaciones no leídas`;
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando notificaciones:", error);
         document.getElementById("listaNotificaciones").innerHTML = `
             <div class="alert alert-danger">
                 No se pudieron cargar las notificaciones.
@@ -71,7 +76,7 @@ async function cargarNotificaciones() {
 
 async function marcarLeida(notificacionId) {
     try {
-        await fetch(`http://127.0.0.1:5000/api/notifications/${notificacionId}/read`, {
+        await fetch(`${API_URL}/api/notifications/${notificacionId}/read`, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + token
@@ -82,7 +87,7 @@ async function marcarLeida(notificacionId) {
         cargarNotificaciones();
         
     } catch (error) {
-        console.error(error);
+        console.error("Error marcando leída:", error);
         alert("Error al marcar como leída.");
     }
 }

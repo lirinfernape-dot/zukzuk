@@ -1,21 +1,24 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Perfil - API_URL:', API_URL);
+
 const params = new URLSearchParams(window.location.search);
 const usuarioId = params.get("id");
 const token = localStorage.getItem("token");
 
 let usuarioActual = null;
 
-// ==========================================
-// CARGAR PERFIL
-// ==========================================
-
 async function cargarPerfil() {
     try {
-        let url = "http://127.0.0.1:5000/api/users/perfil";
+        let url = `${API_URL}/api/users/perfil`;
         
         if (usuarioId) {
-            url = `http://127.0.0.1:5000/api/users/perfil/${usuarioId}`;
+            url = `${API_URL}/api/users/perfil/${usuarioId}`;
         }
         
+        console.log('Cargando perfil desde:', url);
+
         const respuesta = await fetch(url, {
             headers: {
                 Authorization: "Bearer " + token
@@ -41,20 +44,15 @@ async function cargarPerfil() {
         }
         
         usuarioActual = datos.usuario;
-        
         mostrarPerfil(usuarioActual);
         cargarJuegosUsuario(usuarioActual.id);
         
     } catch (error) {
         console.error("Error en cargarPerfil:", error);
         document.getElementById("nombrePerfil").textContent = "Error al cargar";
-        alert("No se pudo cargar el perfil. Verifica que el servidor esté ejecutándose.");
+        alert("No se pudo cargar el perfil. Error: " + error.message);
     }
 }
-
-// ==========================================
-// MOSTRAR PERFIL
-// ==========================================
 
 function mostrarPerfil(usuario) {
     document.getElementById("nombrePerfil").textContent = usuario.nombre || "Sin nombre";
@@ -63,20 +61,14 @@ function mostrarPerfil(usuario) {
     document.getElementById("monedas").textContent = usuario.monedas || 0;
     document.getElementById("nombreJuegos").textContent = usuario.nombre || "Usuario";
     
-    // Mostrar avatar - CORREGIDO
     const avatarImg = document.getElementById("avatar");
-    
-    if (usuario.avatar && usuario.avatar !== "default_avatar.png" && usuario.avatar !== "null" && usuario.avatar !== "") {
-        avatarImg.src = `http://127.0.0.1:5000/uploads/avatars/${usuario.avatar}`;
-        console.log("Avatar cargado:", avatarImg.src);
+    if (usuario.avatar && usuario.avatar !== "default_avatar.png") {
+        avatarImg.src = `${API_URL}/uploads/avatars/${usuario.avatar}`;
     } else {
         avatarImg.src = "default_avatar.png";
-        console.log("Avatar por defecto");
     }
     
-    // Manejar error de carga de imagen
     avatarImg.onerror = function() {
-        console.error("Error al cargar avatar:", this.src);
         this.src = "default_avatar.png";
     };
     
@@ -85,26 +77,14 @@ function mostrarPerfil(usuario) {
         document.getElementById("btnEditarPerfil").style.display = "inline-block";
     }
     
-    // Mostrar botón de agregar amigo si es otro usuario
     if (usuarioLocal && usuarioId && usuarioLocal.id != usuarioId) {
         document.getElementById("btnAgregarAmigo").style.display = "inline-block";
     }
 }
 
-// ==========================================
-// CARGAR JUEGOS DEL USUARIO
-// ==========================================
-
 async function cargarJuegosUsuario(idUsuario) {
     try {
-        const respuesta = await fetch(
-            `http://127.0.0.1:5000/api/mygames/${idUsuario}`
-        );
-        
-        if (!respuesta.ok) {
-            throw new Error(`Error ${respuesta.status}`);
-        }
-        
+        const respuesta = await fetch(`${API_URL}/api/mygames/${idUsuario}`);
         const juegos = await respuesta.json();
         const contenedor = document.getElementById("juegosUsuario");
         contenedor.innerHTML = "";
@@ -120,7 +100,7 @@ async function cargarJuegosUsuario(idUsuario) {
         
         juegos.forEach(juego => {
             const miniaturaUrl = juego.miniatura ? 
-                `http://127.0.0.1:5000/uploads/juegos/miniaturas/${juego.miniatura}` :
+                `${API_URL}/uploads/juegos/miniaturas/${juego.miniatura}` :
                 'default_game.png';
             
             contenedor.innerHTML += `
@@ -161,15 +141,11 @@ async function cargarJuegosUsuario(idUsuario) {
     }
 }
 
-// ==========================================
-// AGREGAR AMIGO
-// ==========================================
-
 async function agregarAmigo() {
     if (!usuarioActual) return;
     
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/friends/add", {
+        const respuesta = await fetch(`${API_URL}/api/friends/add`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -194,11 +170,6 @@ async function agregarAmigo() {
     }
 }
 
-// ==========================================
-// INICIAR
-// ==========================================
-
-// Verificar token al cargar
 if (!token) {
     alert("Debes iniciar sesión.");
     window.location.href = "login.html";

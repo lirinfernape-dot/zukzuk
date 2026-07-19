@@ -1,8 +1,13 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Eventos - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 async function cargarEventos() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/events/active");
+        const respuesta = await fetch(`${API_URL}/api/events/active`);
         const eventos = await respuesta.json();
         const contenedor = document.getElementById("listaEventos");
         contenedor.innerHTML = "";
@@ -42,7 +47,7 @@ async function cargarEventos() {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando eventos:", error);
         document.getElementById("listaEventos").innerHTML = `
             <div class="alert alert-danger">
                 No se pudieron cargar los eventos.
@@ -59,7 +64,7 @@ async function participarEvento(eventoId) {
     }
     
     try {
-        const respuesta = await fetch(`http://127.0.0.1:5000/api/events/participate/${eventoId}`, {
+        const respuesta = await fetch(`${API_URL}/api/events/participate/${eventoId}`, {
             method: "POST",
             headers: {
                 Authorization: "Bearer " + token
@@ -74,7 +79,7 @@ async function participarEvento(eventoId) {
         }
         
     } catch (error) {
-        console.error(error);
+        console.error("Error participando en evento:", error);
         alert("Error al participar en el evento.");
     }
 }

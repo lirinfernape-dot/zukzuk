@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Logros - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -7,7 +12,7 @@ if (!token) {
 
 async function cargarLogros() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/achievements", {
+        const respuesta = await fetch(`${API_URL}/api/achievements`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -30,7 +35,6 @@ async function cargarLogros() {
         
         let desbloqueados = logros.filter(l => l.desbloqueado).length;
         
-        // Mostrar contador
         contenedor.innerHTML = `
             <div class="col-12 mb-3">
                 <div class="alert alert-info">
@@ -58,7 +62,7 @@ async function cargarLogros() {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando logros:", error);
         document.getElementById("listaLogros").innerHTML = `
             <div class="col-12">
                 <div class="alert alert-danger">

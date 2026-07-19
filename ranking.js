@@ -1,14 +1,23 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Ranking - API_URL:', API_URL);
+
 let tipoActual = 'likes';
 
 async function cargarRanking(tipo) {
     tipoActual = tipo;
     
-    // Actualizar tabs
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById('tab' + tipo.charAt(0).toUpperCase() + tipo.slice(1)).classList.add('active');
+    const tabMap = {
+        'likes': 'tabLikes',
+        'visitas': 'tabVisitas',
+        'creadores': 'tabCreadores'
+    };
+    document.getElementById(tabMap[tipo]).classList.add('active');
     
     try {
-        const respuesta = await fetch(`http://127.0.0.1:5000/api/ranking/${tipo}`);
+        const respuesta = await fetch(`${API_URL}/api/ranking/${tipo}`);
         const datos = await respuesta.json();
         const contenedor = document.getElementById('rankingList');
         contenedor.innerHTML = '';
@@ -31,18 +40,22 @@ async function cargarRanking(tipo) {
             `;
             
             if (tipo === 'creadores') {
+                const avatarUrl = item.avatar && item.avatar !== "default_avatar.png"
+                    ? `${API_URL}/uploads/avatars/${item.avatar}`
+                    : 'default_avatar.png';
+                    
                 html += `
                     <img 
-                        src="http://127.0.0.1:5000/uploads/avatars/${item.avatar || 'default_avatar.png'}"
+                        src="${avatarUrl}"
                         class="rank-avatar"
                         onerror="this.src='default_avatar.png'"
                     >
                     <div class="rank-info">
                         <h5 class="mb-0">${item.nombre}</h5>
                         <div class="rank-stats">
-                            📁 ${item.total_juegos} juegos 
-                            ❤️ ${item.total_likes} likes 
-                            👁 ${item.total_visitas} visitas
+                            📁 ${item.total_juegos || 0} juegos 
+                            ❤️ ${item.total_likes || 0} likes 
+                            👁 ${item.total_visitas || 0} visitas
                         </div>
                     </div>
                     <button class="btn btn-outline-info btn-sm" onclick="verPerfil(${item.id})">
@@ -50,9 +63,13 @@ async function cargarRanking(tipo) {
                     </button>
                 `;
             } else {
+                const miniaturaUrl = item.miniatura 
+                    ? `${API_URL}/uploads/juegos/miniaturas/${item.miniatura}`
+                    : 'default_game.png';
+                    
                 html += `
                     <img 
-                        src="http://127.0.0.1:5000/uploads/juegos/miniaturas/${item.miniatura || 'default_game.png'}"
+                        src="${miniaturaUrl}"
                         class="rank-avatar"
                         onerror="this.src='default_game.png'"
                         style="border-radius:10px;"
@@ -60,9 +77,9 @@ async function cargarRanking(tipo) {
                     <div class="rank-info">
                         <h5 class="mb-0">${item.nombre}</h5>
                         <div class="rank-stats">
-                            ❤️ ${item.likes} likes 
-                            👁 ${item.visitas} visitas 
-                            ⭐ ${item.favoritos} favoritos
+                            ❤️ ${item.likes || 0} likes 
+                            👁 ${item.visitas || 0} visitas 
+                            ⭐ ${item.favoritos || 0} favoritos
                         </div>
                     </div>
                     <button class="btn btn-success btn-sm" onclick="verJuego(${item.id})">
@@ -76,7 +93,7 @@ async function cargarRanking(tipo) {
         });
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando ranking:", error);
         document.getElementById('rankingList').innerHTML = `
             <div class="alert alert-danger">
                 No se pudo cargar el ranking.
@@ -93,5 +110,4 @@ function verJuego(id) {
     window.location.href = `juego.html?id=${id}`;
 }
 
-// Cargar ranking inicial
 cargarRanking('likes');

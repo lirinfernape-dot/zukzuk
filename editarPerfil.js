@@ -1,3 +1,8 @@
+// Configuración de la URL
+const API_URL = 'https://zukzuk-fvhn.onrender.com';
+
+console.log('Editar Perfil - API_URL:', API_URL);
+
 const token = localStorage.getItem("token");
 
 if (!token) {
@@ -5,13 +10,9 @@ if (!token) {
     window.location.href = "login.html";
 }
 
-// ==========================================
-// CARGAR DATOS DEL PERFIL
-// ==========================================
-
 async function cargarPerfil() {
     try {
-        const respuesta = await fetch("http://127.0.0.1:5000/api/users/perfil", {
+        const respuesta = await fetch(`${API_URL}/api/users/perfil`, {
             headers: {
                 Authorization: "Bearer " + token
             }
@@ -25,21 +26,18 @@ async function cargarPerfil() {
         document.getElementById("biografia").value = usuario.biografia || "";
         
     } catch (error) {
-        console.error(error);
+        console.error("Error cargando perfil:", error);
         alert("No se pudo cargar el perfil.");
     }
 }
 
-// ==========================================
-// GUARDAR CAMBIOS
-// ==========================================
+cargarPerfil();
 
 document.getElementById("formEditarPerfil").addEventListener("submit", async function(e) {
     e.preventDefault();
     
     try {
-        // 1. Actualizar nombre y género
-        const respuesta = await fetch("http://127.0.0.1:5000/api/users/perfil", {
+        const respuesta = await fetch(`${API_URL}/api/users/perfil`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -58,9 +56,8 @@ document.getElementById("formEditarPerfil").addEventListener("submit", async fun
             return;
         }
         
-        // 2. Actualizar biografía
         const biografia = document.getElementById("biografia").value;
-        await fetch("http://127.0.0.1:5000/api/users/biografia", {
+        await fetch(`${API_URL}/api/users/biografia`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -69,22 +66,6 @@ document.getElementById("formEditarPerfil").addEventListener("submit", async fun
             body: JSON.stringify({ biografia: biografia })
         });
         
-        // 3. Subir avatar si se seleccionó uno
-        const avatarFile = document.getElementById("avatar").files[0];
-        if (avatarFile) {
-            const formData = new FormData();
-            formData.append("avatar", avatarFile);
-            
-            await fetch("http://127.0.0.1:5000/api/users/avatar", {
-                method: "POST",
-                headers: {
-                    Authorization: "Bearer " + token
-                },
-                body: formData
-            });
-        }
-        
-        // Actualizar datos en localStorage
         const usuarioLocal = JSON.parse(localStorage.getItem("usuario"));
         usuarioLocal.nombre = document.getElementById("nombre").value;
         localStorage.setItem("usuario", JSON.stringify(usuarioLocal));
@@ -93,14 +74,10 @@ document.getElementById("formEditarPerfil").addEventListener("submit", async fun
         window.location.href = "perfil.html";
         
     } catch (error) {
-        console.error(error);
+        console.error("Error actualizando perfil:", error);
         alert("Error al actualizar el perfil.");
     }
 });
-
-// ==========================================
-// CAMBIAR CONTRASEÑA
-// ==========================================
 
 function cambiarContrasena() {
     const nuevaContrasena = prompt("Ingresa tu nueva contraseña:");
@@ -113,9 +90,3 @@ function cambiarContrasena() {
     // Aquí iría la llamada a la API para cambiar contraseña
     alert("🔧 Funcionalidad en desarrollo.");
 }
-
-// ==========================================
-// INICIAR
-// ==========================================
-
-cargarPerfil();
