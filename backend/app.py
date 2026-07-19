@@ -3,10 +3,11 @@ from flask_cors import CORS
 import os
 import sys
 
-# Agregar el directorio raíz del proyecto para buscar archivos
+# Agregar el directorio raíz del proyecto al path de Python
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(BASE_DIR)
+sys.path.insert(0, BASE_DIR)
 
+# Ahora importamos desde la raíz
 from config import HOST, PORT, DEBUG
 from database import crear_tablas
 from routes.auth import auth
