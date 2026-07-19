@@ -11,7 +11,6 @@ def get_db_connection():
     """
     Establece y retorna una conexión a la base de datos.
     """
-    # En Render, usar la ruta del disco
     if os.environ.get('RENDER'):
         db_path = os.path.join('/opt/render/project/src/backend', 'zukzuk.db')
     else:
@@ -32,7 +31,7 @@ def crear_tablas():
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Tabla de usuarios
+    # Tabla de usuarios con columnas para personalización
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -46,18 +45,18 @@ def crear_tablas():
             nivel INTEGER DEFAULT 1,
             monedas INTEGER DEFAULT 0,
             es_admin INTEGER DEFAULT 0,
-            fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             skin_color TEXT DEFAULT '#F5D0B8',
-        hair_style TEXT DEFAULT 'default',
-        hair_color TEXT DEFAULT '#4A2F1A',
-        eye_color TEXT DEFAULT '#5C3D2E',
-        shirt_color TEXT DEFAULT '#3B82F6',
-        pants_color TEXT DEFAULT '#1E3A5F',
-        shoes_color TEXT DEFAULT '#2D2D2D',
-        hat_style TEXT DEFAULT 'none',
-        glasses_style TEXT DEFAULT 'none',
-        body_type TEXT DEFAULT 'normal',
-        gender_avatar TEXT DEFAULT 'male'
+            hair_style TEXT DEFAULT 'default',
+            hair_color TEXT DEFAULT '#4A2F1A',
+            eye_color TEXT DEFAULT '#5C3D2E',
+            shirt_color TEXT DEFAULT '#3B82F6',
+            pants_color TEXT DEFAULT '#1E3A5F',
+            shoes_color TEXT DEFAULT '#2D2D2D',
+            hat_style TEXT DEFAULT 'none',
+            glasses_style TEXT DEFAULT 'none',
+            body_type TEXT DEFAULT 'normal',
+            gender_avatar TEXT DEFAULT 'male'
         )
     ''')
     
@@ -308,10 +307,15 @@ def obtener_usuario(id_usuario):
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        cursor.execute(
-            "SELECT id, nombre, correo, fecha_nacimiento, genero, avatar, biografia, nivel, monedas, es_admin, fecha_registro FROM usuarios WHERE id = ?",
-            (id_usuario,)
-        )
+        cursor.execute("""
+            SELECT id, nombre, correo, fecha_nacimiento, genero, avatar, biografia, 
+                   nivel, monedas, es_admin, fecha_registro,
+                   skin_color, hair_style, hair_color, eye_color,
+                   shirt_color, pants_color, shoes_color,
+                   hat_style, glasses_style, body_type, gender_avatar
+            FROM usuarios 
+            WHERE id = ?
+        """, (id_usuario,))
         
         usuario = cursor.fetchone()
         conn.close()
@@ -332,10 +336,15 @@ def obtener_usuario_por_correo(correo):
         conn = get_db_connection()
         cursor = conn.cursor()
         
-        cursor.execute(
-            "SELECT id, nombre, correo, fecha_nacimiento, genero, avatar, biografia, nivel, monedas, es_admin, fecha_registro FROM usuarios WHERE correo = ?",
-            (correo,)
-        )
+        cursor.execute("""
+            SELECT id, nombre, correo, fecha_nacimiento, genero, avatar, biografia, 
+                   nivel, monedas, es_admin, fecha_registro,
+                   skin_color, hair_style, hair_color, eye_color,
+                   shirt_color, pants_color, shoes_color,
+                   hat_style, glasses_style, body_type, gender_avatar
+            FROM usuarios 
+            WHERE correo = ?
+        """, (correo,))
         
         usuario = cursor.fetchone()
         conn.close()
@@ -437,6 +446,96 @@ def actualizar_contrasena(id_usuario, nueva_contrasena):
     except Exception as e:
         print(f"Error en actualizar_contrasena: {e}")
         return False
+
+# ==========================================
+# FUNCIONES DE PERSONAJE
+# ==========================================
+
+def actualizar_personaje(id_usuario, datos_personaje):
+    """
+    Actualiza los datos del personaje de un usuario.
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            UPDATE usuarios
+            SET 
+                skin_color = ?,
+                hair_style = ?,
+                hair_color = ?,
+                eye_color = ?,
+                shirt_color = ?,
+                pants_color = ?,
+                shoes_color = ?,
+                hat_style = ?,
+                glasses_style = ?,
+                body_type = ?,
+                gender_avatar = ?
+            WHERE id = ?
+        """, (
+            datos_personaje.get('skin_color', '#F5D0B8'),
+            datos_personaje.get('hair_style', 'default'),
+            datos_personaje.get('hair_color', '#4A2F1A'),
+            datos_personaje.get('eye_color', '#5C3D2E'),
+            datos_personaje.get('shirt_color', '#3B82F6'),
+            datos_personaje.get('pants_color', '#1E3A5F'),
+            datos_personaje.get('shoes_color', '#2D2D2D'),
+            datos_personaje.get('hat_style', 'none'),
+            datos_personaje.get('glasses_style', 'none'),
+            datos_personaje.get('body_type', 'normal'),
+            datos_personaje.get('gender_avatar', 'male'),
+            id_usuario
+        ))
+        
+        conn.commit()
+        conn.close()
+        return True
+        
+    except Exception as e:
+        print(f"Error en actualizar_personaje: {e}")
+        return False
+
+def obtener_personaje(id_usuario):
+    """
+    Obtiene los datos del personaje de un usuario.
+    """
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        cursor.execute("""
+            SELECT 
+                skin_color, hair_style, hair_color, eye_color,
+                shirt_color, pants_color, shoes_color,
+                hat_style, glasses_style, body_type, gender_avatar
+            FROM usuarios
+            WHERE id = ?
+        """, (id_usuario,))
+        
+        resultado = cursor.fetchone()
+        conn.close()
+        
+        if resultado:
+            return {
+                "skin_color": resultado["skin_color"],
+                "hair_style": resultado["hair_style"],
+                "hair_color": resultado["hair_color"],
+                "eye_color": resultado["eye_color"],
+                "shirt_color": resultado["shirt_color"],
+                "pants_color": resultado["pants_color"],
+                "shoes_color": resultado["shoes_color"],
+                "hat_style": resultado["hat_style"],
+                "glasses_style": resultado["glasses_style"],
+                "body_type": resultado["body_type"],
+                "gender_avatar": resultado["gender_avatar"]
+            }
+        return None
+        
+    except Exception as e:
+        print(f"Error en obtener_personaje: {e}")
+        return None
 
 def agregar_monedas(id_usuario, cantidad):
     """
@@ -1048,89 +1147,3 @@ def crear_tabla_likes():
 if __name__ == "__main__":
     crear_tablas()
     print("✅ Base de datos inicializada correctamente.")
-
-    def actualizar_personaje(id_usuario, datos_personaje):
-    """
-    Actualiza los datos del personaje de un usuario.
-    """
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            UPDATE usuarios
-            SET 
-                skin_color = ?,
-                hair_style = ?,
-                hair_color = ?,
-                eye_color = ?,
-                shirt_color = ?,
-                pants_color = ?,
-                shoes_color = ?,
-                hat_style = ?,
-                glasses_style = ?,
-                body_type = ?,
-                gender_avatar = ?
-            WHERE id = ?
-        """, (
-            datos_personaje.get('skin_color', '#F5D0B8'),
-            datos_personaje.get('hair_style', 'default'),
-            datos_personaje.get('hair_color', '#4A2F1A'),
-            datos_personaje.get('eye_color', '#5C3D2E'),
-            datos_personaje.get('shirt_color', '#3B82F6'),
-            datos_personaje.get('pants_color', '#1E3A5F'),
-            datos_personaje.get('shoes_color', '#2D2D2D'),
-            datos_personaje.get('hat_style', 'none'),
-            datos_personaje.get('glasses_style', 'none'),
-            datos_personaje.get('body_type', 'normal'),
-            datos_personaje.get('gender_avatar', 'male'),
-            id_usuario
-        ))
-        
-        conn.commit()
-        conn.close()
-        return True
-        
-    except Exception as e:
-        print(f"Error en actualizar_personaje: {e}")
-        return False
-
-def obtener_personaje(id_usuario):
-    """
-    Obtiene los datos del personaje de un usuario.
-    """
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
-        
-        cursor.execute("""
-            SELECT 
-                skin_color, hair_style, hair_color, eye_color,
-                shirt_color, pants_color, shoes_color,
-                hat_style, glasses_style, body_type, gender_avatar
-            FROM usuarios
-            WHERE id = ?
-        """, (id_usuario,))
-        
-        resultado = cursor.fetchone()
-        conn.close()
-        
-        if resultado:
-            return {
-                "skin_color": resultado["skin_color"],
-                "hair_style": resultado["hair_style"],
-                "hair_color": resultado["hair_color"],
-                "eye_color": resultado["eye_color"],
-                "shirt_color": resultado["shirt_color"],
-                "pants_color": resultado["pants_color"],
-                "shoes_color": resultado["shoes_color"],
-                "hat_style": resultado["hat_style"],
-                "glasses_style": resultado["glasses_style"],
-                "body_type": resultado["body_type"],
-                "gender_avatar": resultado["gender_avatar"]
-            }
-        return None
-        
-    except Exception as e:
-        print(f"Error en obtener_personaje: {e}")
-        return None
