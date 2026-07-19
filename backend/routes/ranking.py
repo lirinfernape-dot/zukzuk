@@ -1,11 +1,10 @@
 from flask import Blueprint, request, jsonify
-from database import get_db_connection
+from backend.database import get_db_connection
 
 ranking = Blueprint("ranking", __name__)
 
 @ranking.route("/api/ranking/likes", methods=["GET"])
 def ranking_likes():
-    """Ranking de juegos por likes."""
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -35,7 +34,6 @@ def ranking_likes():
 
 @ranking.route("/api/ranking/visitas", methods=["GET"])
 def ranking_visitas():
-    """Ranking de juegos por visitas."""
     conn = get_db_connection()
     cursor = conn.cursor()
     
@@ -65,7 +63,6 @@ def ranking_visitas():
 
 @ranking.route("/api/ranking/creadores", methods=["GET"])
 def ranking_creadores():
-    """Ranking de creadores por juegos publicados."""
     conn = get_db_connection()
     cursor = conn.cursor()
     

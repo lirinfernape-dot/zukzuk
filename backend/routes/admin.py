@@ -1,29 +1,18 @@
 from flask import Blueprint, request, jsonify
-from middleware.auth_middleware import login_requerido
-from database import get_db_connection
+from backend.middleware.auth_middleware import login_requerido
+from backend.database import get_db_connection
 
 admin = Blueprint("admin", __name__)
-
-# ==========================================
-# VERIFICAR SI ES ADMIN
-# ==========================================
 
 def es_admin(usuario_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        SELECT es_admin FROM usuarios WHERE id = ?
-    """, (usuario_id,))
-    
+    cursor.execute("SELECT es_admin FROM usuarios WHERE id = ?", (usuario_id,))
     resultado = cursor.fetchone()
     conn.close()
     
     return resultado and resultado["es_admin"] == 1
-
-# ==========================================
-# OBTENER TODOS LOS USUARIOS (ADMIN)
-# ==========================================
 
 @admin.route("/api/admin/users", methods=["GET"])
 @login_requerido
@@ -59,10 +48,6 @@ def listar_usuarios():
     
     return jsonify(lista)
 
-# ==========================================
-# ELIMINAR USUARIO (ADMIN)
-# ==========================================
-
 @admin.route("/api/admin/users/<int:usuario_id>", methods=["DELETE"])
 @login_requerido
 def eliminar_usuario(usuario_id):
@@ -81,7 +66,6 @@ def eliminar_usuario(usuario_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    # Eliminar todo el contenido del usuario
     cursor.execute("DELETE FROM juegos WHERE creador_id = ?", (usuario_id,))
     cursor.execute("DELETE FROM likes WHERE usuario_id = ?", (usuario_id,))
     cursor.execute("DELETE FROM favoritos WHERE usuario_id = ?", (usuario_id,))
@@ -98,10 +82,6 @@ def eliminar_usuario(usuario_id):
         "correcto": True,
         "mensaje": "Usuario eliminado correctamente."
     })
-
-# ==========================================
-# OBTENER TODOS LOS JUEGOS (ADMIN)
-# ==========================================
 
 @admin.route("/api/admin/games", methods=["GET"])
 @login_requerido
@@ -140,10 +120,6 @@ def listar_juegos_admin():
     
     return jsonify(lista)
 
-# ==========================================
-# MODERAR JUEGO (CAMBIAR ESTADO)
-# ==========================================
-
 @admin.route("/api/admin/games/<int:juego_id>/moderate", methods=["PUT"])
 @login_requerido
 def moderar_juego(juego_id):
@@ -154,7 +130,7 @@ def moderar_juego(juego_id):
         }), 403
     
     datos = request.get_json()
-    estado = datos.get("estado")  # publico, privado, baneado
+    estado = datos.get("estado")
     
     if estado not in ["publico", "privado", "baneado"]:
         return jsonify({
@@ -165,11 +141,7 @@ def moderar_juego(juego_id):
     conn = get_db_connection()
     cursor = conn.cursor()
     
-    cursor.execute("""
-        UPDATE juegos
-        SET estado = ?
-        WHERE id = ?
-    """, (estado, juego_id))
+    cursor.execute("UPDATE juegos SET estado = ? WHERE id = ?", (estado, juego_id))
     
     conn.commit()
     conn.close()

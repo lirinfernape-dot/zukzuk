@@ -1,37 +1,8 @@
 from flask import Blueprint, request, jsonify
-from middleware.auth_middleware import login_requerido
-from database import get_db_connection
-import datetime
+from backend.middleware.auth_middleware import login_requerido
+from backend.database import get_db_connection
 
 messages = Blueprint("messages", __name__)
-
-# ==========================================
-# CREAR TABLA DE MENSAJES
-# ==========================================
-
-def crear_tabla_mensajes():
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS mensajes (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            remitente_id INTEGER NOT NULL,
-            destinatario_id INTEGER NOT NULL,
-            mensaje TEXT NOT NULL,
-            leido INTEGER DEFAULT 0,
-            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY (remitente_id) REFERENCES usuarios (id),
-            FOREIGN KEY (destinatario_id) REFERENCES usuarios (id)
-        )
-    ''')
-    
-    conn.commit()
-    conn.close()
-
-# ==========================================
-# ENVIAR MENSAJE
-# ==========================================
 
 @messages.route("/api/messages/send", methods=["POST"])
 @login_requerido
@@ -70,10 +41,6 @@ def enviar_mensaje():
         "mensaje": "Mensaje enviado correctamente."
     })
 
-# ==========================================
-# OBTENER MENSAJES RECIBIDOS
-# ==========================================
-
 @messages.route("/api/messages/inbox", methods=["GET"])
 @login_requerido
 def bandeja_entrada():
@@ -107,10 +74,6 @@ def bandeja_entrada():
     
     return jsonify(lista)
 
-# ==========================================
-# OBTENER MENSAJES ENVIADOS
-# ==========================================
-
 @messages.route("/api/messages/sent", methods=["GET"])
 @login_requerido
 def mensajes_enviados():
@@ -143,10 +106,6 @@ def mensajes_enviados():
     
     return jsonify(lista)
 
-# ==========================================
-# MARCAR MENSAJE COMO LEÍDO
-# ==========================================
-
 @messages.route("/api/messages/<int:mensaje_id>/read", methods=["PUT"])
 @login_requerido
 def marcar_mensaje_leido(mensaje_id):
@@ -168,10 +127,6 @@ def marcar_mensaje_leido(mensaje_id):
         "correcto": True,
         "mensaje": "Mensaje marcado como leído."
     })
-
-# ==========================================
-# CONTAR MENSAJES NO LEÍDOS
-# ==========================================
 
 @messages.route("/api/messages/unread/count", methods=["GET"])
 @login_requerido

@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from middleware.auth_middleware import login_requerido
-from database import agregar_amigo, obtener_amigos, es_amigo, eliminar_amigo
+from backend.middleware.auth_middleware import login_requerido
+from backend.database import agregar_amigo, obtener_amigos, es_amigo, eliminar_amigo
 
 friends = Blueprint("friends", __name__)
 

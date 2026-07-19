@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from middleware.auth_middleware import login_requerido
-from werkzeug.utils import secure_filename
+from backend.middleware.auth_middleware import login_requerido
+from backend.database import actualizar_avatar
 import os
 import uuid
 
@@ -25,7 +25,6 @@ def subir_avatar():
             "mensaje": "Archivo inválido."
         }), 400
     
-    # Validar extensión
     extension = archivo.filename.split(".")[-1].lower()
     if extension not in ["jpg", "jpeg", "png", "gif", "webp"]:
         return jsonify({
@@ -33,7 +32,6 @@ def subir_avatar():
             "mensaje": "Formato no permitido. Usa JPG, PNG, GIF o WEBP."
         }), 400
     
-    # Guardar archivo
     nombre_archivo = str(uuid.uuid4()) + "." + extension
     carpeta = "uploads/avatars"
     os.makedirs(carpeta, exist_ok=True)
@@ -41,8 +39,6 @@ def subir_avatar():
     ruta = os.path.join(carpeta, nombre_archivo)
     archivo.save(ruta)
     
-    # Actualizar en base de datos
-    from database import actualizar_avatar
     actualizar_avatar(usuario_id, nombre_archivo)
     
     return jsonify({
