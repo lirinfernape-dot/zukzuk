@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Crear Personaje - ZukZuk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a2e;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #00d2ff;
+            margin: 0;
+        }
+
+        .header h1 span {
+            color: #ff6b6b;
+        }
+
+        .header .coins {
+            background: #2d2d44;
+            padding: 8px 20px;
+            border-radius: 20px;
+            border: 1px solid #ffd700;
+        }
+
+        /* LAYOUT PRINCIPAL */
+        .customizer-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            gap: 25px;
+        }
+
+        /* PANEL DE OPCIONES */
+        .options-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 700px;
+            overflow-y: auto;
+        }
+
+        .options-panel::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .options-panel::-webkit-scrollbar-thumb {
+            background: #00d2ff;
+            border-radius: 10px;
+        }
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-group label {
+            display: block;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #888;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .color-picker-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .color-option:hover {
+            transform: scale(1.15);
+        }
+
+        .color-option.active {
+            border-color: #00d2ff;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
+        }
+
+        .style-option {
+            padding: 8px 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            font-size: 14px;
+        }
+
+        .style-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .style-option.active {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.2);
+        }
+
+        .style-option .icon {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        /* VISTA PREVIA DEL PERSONAJE */
+        .preview-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 300px;
+            height: 400px;
+            background: linear-gradient(180deg, #1a1a2e 0%, #2d2d44 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .avatar-canvas {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar-canvas svg {
+            width: 100%;
+            height: 100%;
+            max-height: 380px;
+        }
+
+        .avatar-actions {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .avatar-actions button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #00d2ff, #0077b6);
+            color: white;
+        }
+
+        .btn-save:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* PRESETS */
+        .presets-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .preset-item {
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid transparent;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .preset-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .preset-item .preview {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+
+        .preset-item .name {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .customizer-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .options-panel {
+                max-height: 400px;
+            }
+
+            .avatar-container {
+                width: 200px;
+                height: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .style-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .preset-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .btn-volver {
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <a href="perfil.html" class="btn-volver">← Volver al Perfil</a>
+            </div>
+            <h1>🎨 <span>Avatar</span> Studio</h1>
+            <div class="coins">
+                🪙 <span id="monedasUsuario">0</span>
+            </div>
+        </div>
+
+        <!-- LAYOUT -->
+        <div class="customizer-layout">
+
+            <!-- PANEL DE OPCIONES IZQUIERDO -->
+            <div class="options-panel">
+                <!-- Género -->
+                <div class="option-group">
+                    <label>👤 Género</label>
+                    <div class="style-grid">
+                        <div class="style-option active" data-option="gender_avatar" data-value="male" onclick="selectOption(this)">
+                            <span class="icon">👨</span>
+                            Masculino
+                        </div>
+                        <div class="style-option" data-option="gender_avatar" data-value="female" onclick="selectOption(this)">
+                            <span class="icon">👩</span>
+                            Femenino
+                        </div>
+                        <div class="style-option" data-option="gender_avatar" data-value="neutral" onclick="selectOption(this)">
+                            <span class="icon">🧑</span>
+                            Neutro
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color de Piel -->
+                <div class="option-group">
+                    <label>🎨 Color de Piel</label>
+                    <div class="color-picker-group" id="skinColors">
+                        <div class="color-option active" style="background:#F5D0B8" data-color="#F5D0B8" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#E8C4A0" data-color="#E8C4A0" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#D4A574" data-color="#D4A574" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#C4956A" data-color="#C4956A" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#B0885E" data-color="#B0885E" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#8B6B4A" data-color="#8B6B4A" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#6B4F3A" data-color="#6B4F3A" onclick="selectColor(this, 'skin_color')"></div>
+                        <div class="color-option" style="background:#4A3524" data-color="#4A3524" onclick="selectColor(this, 'skin_color')"></div>
+                    </div>
+                </div>
+
+                <!-- Estilo de Cabello -->
+                <div class="option-group">
+                    <label>💇 Estilo de Cabello</label>
+                    <div class="style-grid">
+                        <div class="style-option active" data-option="hair_style" data-value="default" onclick="selectOption(this)">
+                            <span class="icon">👨</span>
+                            Clásico
+                        </div>
+                        <div class="style-option" data-option="hair_style" data-value="long" onclick="selectOption(this)">
+                            <span class="icon">🧑</span>
+                            Largo
+                        </div>
+                        <div class="style-option" data-option="hair_style" data-value="spiky" onclick="selectOption(this)">
+                            <span class="icon">⚡</span>
+                            Spiky
+                        </div>
+                        <div class="style-option" data-option="hair_style" data-value="curly" onclick="selectOption(this)">
+                            <span class="icon">🌀</span>
+                            Rizado
+                        </div>
+                        <div class="style-option" data-option="hair_style" data-value="ponytail" onclick="selectOption(this)">
+                            <span class="icon">🎀</span>
+                            Cola de Caballo
+                        </div>
+                        <div class="style-option" data-option="hair_style" data-value="bald" onclick="selectOption(this)">
+                            <span class="icon">🧑‍🦲</span>
+                            Calvo
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color de Cabello -->
+                <div class="option-group">
+                    <label>🎨 Color de Cabello</label>
+                    <div class="color-picker-group" id="hairColors">
+                        <div class="color-option active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#00BFFF" data-color="#00BFFF" onclick="selectColor(this, 'hair_color')"></div>
+                        <div class="color-option" style="background:#FFFFFF" data-color="#FFFFFF" onclick="selectColor(this, 'hair_color')"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA PREVIA DEL PERSONAJE -->
+            <div class="preview-panel">
+                <div class="avatar-container">
+                    <div class="avatar-canvas" id="avatarCanvas">
+                        <!-- SVG del avatar se genera aquí -->
+                    </div>
+                </div>
+                <div class="avatar-actions">
+                    <button class="btn-save" onclick="guardarPersonaje()">💾 Guardar Personaje</button>
+                    <button class="btn-reset" onclick="resetPersonaje()">🔄 Resetear</button>
+                </div>
+            </div>
+
+            <!-- PRESETS -->
+            <div class="presets-panel">
+                <div class="option-group">
+                    <label>🎯 Presets Rápidos</label>
+                    <div class="preset-grid">
+                        <div class="preset-item" onclick="aplicarPreset('hero')">
+                            <div class="preview">🦸</div>
+                            <div class="name">Héroe</div>
+                        </div>
+                        <div class="preset-item" onclick="aplicarPreset('ninja')">
+                            <div class="preview">🥷</div>
+                            <div class="name">Ninja</div>
+                        </div>
+                        <div class="preset-item" onclick="aplicarPreset('princess')">
+                            <div class="preview">👸</div>
+                            <div class="name">Princesa</div>
+                        </div>
+                        <div class="preset-item" onclick="aplicarPreset('pirate')">
+                            <div class="preview">🏴‍☠️</div>
+                            <div class="name">Pirata</div>
+                        </div>
+                        <div class="preset-item" onclick="aplicarPreset('robot')">
+                            <div class="preview">🤖</div>
+                            <div class="name">Robot</div>
+                        </div>
+                        <div class="preset-item" onclick="aplicarPreset('alien')">
+                            <div class="preview">👽</div>
+                            <div class="name">Alien</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="avatar_customizer.js"></script>
+</body>
+</html>

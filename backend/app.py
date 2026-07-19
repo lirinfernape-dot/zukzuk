@@ -23,6 +23,8 @@ from backend.routes.achievements import achievements
 from backend.routes.events import events
 from backend.routes.stats import stats
 from backend.routes.admin import admin
+from backend.routes.avatar_customizer import avatar_customizer
+
 
 app = Flask(__name__, static_folder=BASE_DIR, static_url_path='')
 
@@ -81,6 +83,7 @@ app.register_blueprint(achievements)
 app.register_blueprint(events)
 app.register_blueprint(stats)
 app.register_blueprint(admin)
+app.register_blueprint(avatar_customizer)
 
 # ==========================================
 # RUTA PRINCIPAL - SIRVE index.html
