@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Crear Personaje - ZukZuk</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Avatar Studio 3D - ZukZuk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
@@ -17,59 +17,24 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: white;
             min-height: 100vh;
+            overflow: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* HEADER */
-        .header {
+        .customizer-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
+            height: 100vh;
+            width: 100vw;
         }
 
-        .header h1 {
-            font-size: 28px;
-            color: #00d2ff;
-            margin: 0;
-        }
-
-        .header h1 span {
-            color: #ff6b6b;
-        }
-
-        .header .coins {
-            background: #2d2d44;
-            padding: 8px 20px;
-            border-radius: 20px;
-            border: 1px solid #ffd700;
-        }
-
-        /* LAYOUT PRINCIPAL */
-        .customizer-layout {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr 1fr;
-            gap: 25px;
-        }
-
-        /* PANEL DE OPCIONES */
+        /* Panel de opciones */
         .options-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            max-height: 700px;
+            width: 350px;
+            background: rgba(26, 26, 46, 0.95);
+            padding: 20px;
             overflow-y: auto;
+            border-right: 2px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
 
         .options-panel::-webkit-scrollbar {
@@ -81,220 +46,144 @@
             border-radius: 10px;
         }
 
-        .option-group {
-            margin-bottom: 25px;
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .option-group label {
+        .panel-header h2 {
+            font-size: 20px;
+            color: #00d2ff;
+            margin: 0;
+        }
+
+        .panel-header .coins {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            border: 1px solid #ffd700;
+            font-size: 14px;
+        }
+
+        .option-section {
+            margin-bottom: 18px;
+        }
+
+        .option-section label {
             display: block;
-            font-size: 13px;
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             color: #888;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 600;
         }
 
-        .color-picker-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 6px;
         }
 
-        .color-option {
-            width: 35px;
-            height: 35px;
+        .color-swatch {
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             border: 3px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
         }
 
-        .color-option:hover {
+        .color-swatch:hover {
             transform: scale(1.15);
         }
 
-        .color-option.active {
+        .color-swatch.active {
             border-color: #00d2ff;
             box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
-        }
-
-        .style-option {
-            padding: 8px 15px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: white;
-            font-size: 14px;
-        }
-
-        .style-option:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .style-option.active {
-            border-color: #00d2ff;
-            background: rgba(0, 210, 255, 0.2);
-        }
-
-        .style-option .icon {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 5px;
         }
 
         .style-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
+            gap: 6px;
         }
 
-        /* VISTA PREVIA DEL PERSONAJE */
-        .preview-panel {
+        .style-btn {
+            padding: 6px 8px;
+            border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .avatar-container {
-            position: relative;
-            width: 300px;
-            height: 400px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #2d2d44 100%);
-            border-radius: 20px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .avatar-canvas {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .avatar-canvas svg {
-            width: 100%;
-            height: 100%;
-            max-height: 380px;
-        }
-
-        .avatar-actions {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-        }
-
-        .avatar-actions button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
+            border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
+            color: white;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        .style-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .style-btn.active {
+            border-color: #00d2ff;
+            background: rgba(0, 210, 255, 0.2);
+        }
+
+        .style-btn .icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 2px;
         }
 
         .btn-save {
+            width: 100%;
+            padding: 14px;
             background: linear-gradient(135deg, #00d2ff, #0077b6);
+            border: none;
+            border-radius: 12px;
             color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
         }
 
         .btn-save:hover {
             transform: scale(1.02);
-            box-shadow: 0 5px 20px rgba(0, 210, 255, 0.4);
+            box-shadow: 0 5px 30px rgba(0, 210, 255, 0.4);
         }
 
         .btn-reset {
-            background: rgba(255, 255, 255, 0.1);
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 8px;
         }
 
         .btn-reset:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* PRESETS */
-        .presets-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .preset-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .preset-item {
-            padding: 15px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .preset-item:hover {
             background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-3px);
-        }
-
-        .preset-item .preview {
-            font-size: 40px;
-            margin-bottom: 5px;
-        }
-
-        .preset-item .name {
-            font-size: 12px;
-            color: #888;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 992px) {
-            .customizer-layout {
-                grid-template-columns: 1fr;
-            }
-
-            .options-panel {
-                max-height: 400px;
-            }
-
-            .avatar-container {
-                width: 200px;
-                height: 280px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .style-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .preset-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         .btn-volver {
             background: rgba(255, 255, 255, 0.05);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 20px;
-            border-radius: 10px;
+            padding: 5px 14px;
+            border-radius: 8px;
             text-decoration: none;
+            font-size: 13px;
             transition: all 0.3s;
         }
 
@@ -302,157 +191,278 @@
             background: rgba(255, 255, 255, 0.1);
             color: white;
         }
+
+        /* Vista 3D */
+        .viewer-panel {
+            flex: 1;
+            background: #0a0a1a;
+            position: relative;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .viewer-controls {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 16px;
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .viewer-controls button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+
+        .viewer-controls button:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .viewer-controls button.active {
+            background: #00d2ff;
+            color: #000;
+        }
+
+        .presets-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-top: 8px;
+        }
+
+        .preset-btn {
+            padding: 8px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+            color: white;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .preset-btn .emoji {
+            font-size: 24px;
+            display: block;
+        }
+
+        .preset-btn .name {
+            font-size: 10px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .customizer-container {
+                flex-direction: column;
+            }
+
+            .options-panel {
+                width: 100%;
+                height: 50vh;
+                border-right: none;
+                border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .viewer-panel {
+                height: 50vh;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- HEADER -->
-        <div class="header">
-            <div>
-                <a href="perfil.html" class="btn-volver">← Volver al Perfil</a>
+    <div class="customizer-container">
+        <!-- Panel de opciones -->
+        <div class="options-panel">
+            <div class="panel-header">
+                <div>
+                    <a href="perfil.html" class="btn-volver">← Volver</a>
+                </div>
+                <h2>🎨 Avatar 3D</h2>
+                <div class="coins">🪙 <span id="monedasUsuario">0</span></div>
             </div>
-            <h1>🎨 <span>Avatar</span> Studio</h1>
-            <div class="coins">
-                🪙 <span id="monedasUsuario">0</span>
+
+            <!-- Género -->
+            <div class="option-section">
+                <label>👤 Género</label>
+                <div class="style-grid">
+                    <div class="style-btn active" data-option="gender" data-value="male" onclick="selectOption(this)">
+                        <span class="icon">👨</span> Masculino
+                    </div>
+                    <div class="style-btn" data-option="gender" data-value="female" onclick="selectOption(this)">
+                        <span class="icon">👩</span> Femenino
+                    </div>
+                    <div class="style-btn" data-option="gender" data-value="neutral" onclick="selectOption(this)">
+                        <span class="icon">🧑</span> Neutro
+                    </div>
+                </div>
             </div>
+
+            <!-- Color de piel -->
+            <div class="option-section">
+                <label>🎨 Color de piel</label>
+                <div class="color-grid" id="skinColors">
+                    <div class="color-swatch active" style="background:#F5D0B8" data-color="#F5D0B8" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#E8C4A0" data-color="#E8C4A0" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#D4A574" data-color="#D4A574" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#C4956A" data-color="#C4956A" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#B0885E" data-color="#B0885E" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#8B6B4A" data-color="#8B6B4A" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#6B4F3A" data-color="#6B4F3A" onclick="selectColor(this, 'skin')"></div>
+                    <div class="color-swatch" style="background:#4A3524" data-color="#4A3524" onclick="selectColor(this, 'skin')"></div>
+                </div>
+            </div>
+
+            <!-- Cabello -->
+            <div class="option-section">
+                <label>💇 Cabello</label>
+                <div class="style-grid">
+                    <div class="style-btn active" data-option="hair" data-value="short" onclick="selectOption(this)">
+                        <span class="icon">👨</span> Corto
+                    </div>
+                    <div class="style-btn" data-option="hair" data-value="long" onclick="selectOption(this)">
+                        <span class="icon">🧑</span> Largo
+                    </div>
+                    <div class="style-btn" data-option="hair" data-value="spiky" onclick="selectOption(this)">
+                        <span class="icon">⚡</span> Spiky
+                    </div>
+                    <div class="style-btn" data-option="hair" data-value="curly" onclick="selectOption(this)">
+                        <span class="icon">🌀</span> Rizado
+                    </div>
+                    <div class="style-btn" data-option="hair" data-value="ponytail" onclick="selectOption(this)">
+                        <span class="icon">🎀</span> Cola
+                    </div>
+                    <div class="style-btn" data-option="hair" data-value="bald" onclick="selectOption(this)">
+                        <span class="icon">🧑‍🦲</span> Calvo
+                    </div>
+                </div>
+            </div>
+
+            <!-- Color de cabello -->
+            <div class="option-section">
+                <label>🎨 Color de cabello</label>
+                <div class="color-grid" id="hairColors">
+                    <div class="color-swatch active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#00BFFF" data-color="#00BFFF" onclick="selectColor(this, 'hairColor')"></div>
+                    <div class="color-swatch" style="background:#FFFFFF" data-color="#FFFFFF" onclick="selectColor(this, 'hairColor')"></div>
+                </div>
+            </div>
+
+            <!-- Color de ropa -->
+            <div class="option-section">
+                <label>👕 Color de ropa</label>
+                <div class="color-grid">
+                    <div class="color-swatch active" style="background:#3B82F6" data-color="#3B82F6" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#EF4444" data-color="#EF4444" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#22C55E" data-color="#22C55E" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#F59E0B" data-color="#F59E0B" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#8B5CF6" data-color="#8B5CF6" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#EC4899" data-color="#EC4899" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#14B8A6" data-color="#14B8A6" onclick="selectColor(this, 'shirt')"></div>
+                    <div class="color-swatch" style="background:#1A1A2E" data-color="#1A1A2E" onclick="selectColor(this, 'shirt')"></div>
+                </div>
+            </div>
+
+            <!-- Accesorios -->
+            <div class="option-section">
+                <label>🎩 Accesorios</label>
+                <div class="style-grid">
+                    <div class="style-btn active" data-option="hat" data-value="none" onclick="selectOption(this)">
+                        <span class="icon">🚫</span> Ninguno
+                    </div>
+                    <div class="style-btn" data-option="hat" data-value="tophat" onclick="selectOption(this)">
+                        <span class="icon">🎩</span> Sombrero
+                    </div>
+                    <div class="style-btn" data-option="hat" data-value="cap" onclick="selectOption(this)">
+                        <span class="icon">🧢</span> Gorra
+                    </div>
+                    <div class="style-btn" data-option="hat" data-value="crown" onclick="selectOption(this)">
+                        <span class="icon">👑</span> Corona
+                    </div>
+                    <div class="style-btn" data-option="glasses" data-value="none" onclick="selectOption(this)">
+                        <span class="icon">🚫</span> Sin gafas
+                    </div>
+                    <div class="style-btn" data-option="glasses" data-value="round" onclick="selectOption(this)">
+                        <span class="icon">👓</span> Redondas
+                    </div>
+                    <div class="style-btn" data-option="glasses" data-value="sunglasses" onclick="selectOption(this)">
+                        <span class="icon">😎</span> Gafas sol
+                    </div>
+                </div>
+            </div>
+
+            <!-- Presets -->
+            <div class="option-section">
+                <label>🎯 Presets rápidos</label>
+                <div class="presets-row">
+                    <div class="preset-btn" onclick="aplicarPreset('hero')">
+                        <span class="emoji">🦸</span>
+                        <span class="name">Héroe</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('ninja')">
+                        <span class="emoji">🥷</span>
+                        <span class="name">Ninja</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('princess')">
+                        <span class="emoji">👸</span>
+                        <span class="name">Princesa</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('pirate')">
+                        <span class="emoji">🏴‍☠️</span>
+                        <span class="name">Pirata</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('robot')">
+                        <span class="emoji">🤖</span>
+                        <span class="name">Robot</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('alien')">
+                        <span class="emoji">👽</span>
+                        <span class="name">Alien</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-save" onclick="guardarPersonaje()">💾 Guardar Personaje</button>
+            <button class="btn-reset" onclick="resetPersonaje()">🔄 Resetear</button>
         </div>
 
-        <!-- LAYOUT -->
-        <div class="customizer-layout">
-
-            <!-- PANEL DE OPCIONES IZQUIERDO -->
-            <div class="options-panel">
-                <!-- Género -->
-                <div class="option-group">
-                    <label>👤 Género</label>
-                    <div class="style-grid">
-                        <div class="style-option active" data-option="gender_avatar" data-value="male" onclick="selectOption(this)">
-                            <span class="icon">👨</span>
-                            Masculino
-                        </div>
-                        <div class="style-option" data-option="gender_avatar" data-value="female" onclick="selectOption(this)">
-                            <span class="icon">👩</span>
-                            Femenino
-                        </div>
-                        <div class="style-option" data-option="gender_avatar" data-value="neutral" onclick="selectOption(this)">
-                            <span class="icon">🧑</span>
-                            Neutro
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Color de Piel -->
-                <div class="option-group">
-                    <label>🎨 Color de Piel</label>
-                    <div class="color-picker-group" id="skinColors">
-                        <div class="color-option active" style="background:#F5D0B8" data-color="#F5D0B8" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#E8C4A0" data-color="#E8C4A0" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#D4A574" data-color="#D4A574" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#C4956A" data-color="#C4956A" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#B0885E" data-color="#B0885E" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#8B6B4A" data-color="#8B6B4A" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#6B4F3A" data-color="#6B4F3A" onclick="selectColor(this, 'skin_color')"></div>
-                        <div class="color-option" style="background:#4A3524" data-color="#4A3524" onclick="selectColor(this, 'skin_color')"></div>
-                    </div>
-                </div>
-
-                <!-- Estilo de Cabello -->
-                <div class="option-group">
-                    <label>💇 Estilo de Cabello</label>
-                    <div class="style-grid">
-                        <div class="style-option active" data-option="hair_style" data-value="default" onclick="selectOption(this)">
-                            <span class="icon">👨</span>
-                            Clásico
-                        </div>
-                        <div class="style-option" data-option="hair_style" data-value="long" onclick="selectOption(this)">
-                            <span class="icon">🧑</span>
-                            Largo
-                        </div>
-                        <div class="style-option" data-option="hair_style" data-value="spiky" onclick="selectOption(this)">
-                            <span class="icon">⚡</span>
-                            Spiky
-                        </div>
-                        <div class="style-option" data-option="hair_style" data-value="curly" onclick="selectOption(this)">
-                            <span class="icon">🌀</span>
-                            Rizado
-                        </div>
-                        <div class="style-option" data-option="hair_style" data-value="ponytail" onclick="selectOption(this)">
-                            <span class="icon">🎀</span>
-                            Cola de Caballo
-                        </div>
-                        <div class="style-option" data-option="hair_style" data-value="bald" onclick="selectOption(this)">
-                            <span class="icon">🧑‍🦲</span>
-                            Calvo
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Color de Cabello -->
-                <div class="option-group">
-                    <label>🎨 Color de Cabello</label>
-                    <div class="color-picker-group" id="hairColors">
-                        <div class="color-option active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#00BFFF" data-color="#00BFFF" onclick="selectColor(this, 'hair_color')"></div>
-                        <div class="color-option" style="background:#FFFFFF" data-color="#FFFFFF" onclick="selectColor(this, 'hair_color')"></div>
-                    </div>
-                </div>
+        <!-- Vista 3D -->
+        <div class="viewer-panel">
+            <div id="canvas-container"></div>
+            <div class="viewer-controls">
+                <button class="active" onclick="toggleAutoRotate()">🔄 Auto-rotar</button>
+                <button onclick="resetCamera()">🎯 Centrar</button>
             </div>
-
-            <!-- VISTA PREVIA DEL PERSONAJE -->
-            <div class="preview-panel">
-                <div class="avatar-container">
-                    <div class="avatar-canvas" id="avatarCanvas">
-                        <!-- SVG del avatar se genera aquí -->
-                    </div>
-                </div>
-                <div class="avatar-actions">
-                    <button class="btn-save" onclick="guardarPersonaje()">💾 Guardar Personaje</button>
-                    <button class="btn-reset" onclick="resetPersonaje()">🔄 Resetear</button>
-                </div>
-            </div>
-
-            <!-- PRESETS -->
-            <div class="presets-panel">
-                <div class="option-group">
-                    <label>🎯 Presets Rápidos</label>
-                    <div class="preset-grid">
-                        <div class="preset-item" onclick="aplicarPreset('hero')">
-                            <div class="preview">🦸</div>
-                            <div class="name">Héroe</div>
-                        </div>
-                        <div class="preset-item" onclick="aplicarPreset('ninja')">
-                            <div class="preview">🥷</div>
-                            <div class="name">Ninja</div>
-                        </div>
-                        <div class="preset-item" onclick="aplicarPreset('princess')">
-                            <div class="preview">👸</div>
-                            <div class="name">Princesa</div>
-                        </div>
-                        <div class="preset-item" onclick="aplicarPreset('pirate')">
-                            <div class="preview">🏴‍☠️</div>
-                            <div class="name">Pirata</div>
-                        </div>
-                        <div class="preset-item" onclick="aplicarPreset('robot')">
-                            <div class="preview">🤖</div>
-                            <div class="name">Robot</div>
-                        </div>
-                        <div class="preset-item" onclick="aplicarPreset('alien')">
-                            <div class="preview">👽</div>
-                            <div class="name">Alien</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="avatar_customizer.js"></script>
 </body>
 </html>
