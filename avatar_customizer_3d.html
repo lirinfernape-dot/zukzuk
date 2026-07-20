@@ -25,7 +25,6 @@
             height: 100vh;
         }
 
-        /* HEADER */
         .header {
             display: flex;
             justify-content: space-between;
@@ -43,7 +42,6 @@
             color: #00d2ff;
             margin: 0;
             font-weight: 800;
-            text-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
         .header h1 span {
@@ -70,7 +68,6 @@
         .btn-volver:hover {
             background: rgba(255, 255, 255, 0.15);
             color: white;
-            transform: scale(1.05);
         }
 
         .coins-display {
@@ -83,7 +80,6 @@
             font-weight: 600;
         }
 
-        /* LAYOUT PRINCIPAL */
         .main-layout {
             display: grid;
             grid-template-columns: 340px 1fr 280px;
@@ -91,7 +87,6 @@
             height: calc(100vh - 80px);
         }
 
-        /* PANEL DE OPCIONES */
         .options-panel {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
@@ -111,12 +106,12 @@
         }
 
         .option-group {
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
         .option-group label {
             display: block;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #888;
@@ -127,12 +122,12 @@
         .color-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
-            gap: 5px;
+            gap: 4px;
         }
 
         .color-swatch {
-            width: 26px;
-            height: 26px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             border: 3px solid transparent;
             cursor: pointer;
@@ -141,13 +136,12 @@
         }
 
         .color-swatch:hover {
-            transform: scale(1.2);
+            transform: scale(1.15);
         }
 
         .color-swatch.active {
             border-color: #00d2ff;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
-            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
         }
 
         .color-swatch .check-mark {
@@ -156,7 +150,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 12px;
+            font-size: 10px;
             display: none;
             text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
@@ -168,38 +162,36 @@
         .style-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
+            gap: 4px;
         }
 
         .style-btn {
-            padding: 6px 8px;
-            border-radius: 10px;
+            padding: 5px 6px;
+            border-radius: 8px;
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
             color: #aaa;
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .style-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            transform: scale(1.02);
         }
 
         .style-btn.active {
             border-color: #00d2ff;
             background: rgba(0, 210, 255, 0.15);
             color: white;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.1);
         }
 
         .style-btn .icon {
-            font-size: 20px;
+            font-size: 18px;
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 1px;
         }
 
         .action-buttons {
@@ -210,26 +202,25 @@
         }
 
         .btn-save {
-            padding: 12px;
+            padding: 10px;
             background: linear-gradient(135deg, #00d2ff, #0077b6);
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             color: white;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
             grid-column: span 2;
-            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
         }
 
         .btn-save:hover {
             transform: scale(1.02);
-            box-shadow: 0 6px 30px rgba(0, 210, 255, 0.5);
+            box-shadow: 0 5px 25px rgba(0, 210, 255, 0.4);
         }
 
         .btn-reset {
-            padding: 10px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.06);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 10px;
@@ -245,7 +236,7 @@
         }
 
         .btn-random {
-            padding: 10px;
+            padding: 8px;
             background: rgba(255, 215, 0, 0.12);
             border: 1px solid rgba(255, 215, 0, 0.2);
             border-radius: 10px;
@@ -260,19 +251,21 @@
             background: rgba(255, 215, 0, 0.2);
         }
 
-        /* VISTA 3D */
         .viewer-panel {
             background: rgba(255, 255, 255, 0.03);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        #canvas-container {
+        .viewer-panel iframe {
             width: 100%;
             height: 100%;
+            border: none;
         }
 
         .viewer-controls {
@@ -283,7 +276,7 @@
             display: flex;
             gap: 10px;
             background: rgba(0, 0, 0, 0.6);
-            padding: 8px 20px;
+            padding: 6px 18px;
             border-radius: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -293,11 +286,11 @@
             background: rgba(255, 255, 255, 0.08);
             border: none;
             color: #aaa;
-            padding: 6px 18px;
+            padding: 5px 16px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
 
@@ -309,84 +302,24 @@
         .viewer-controls button.active {
             background: #00d2ff;
             color: #000;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
         }
 
         .model-info {
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 11px;
+            font-size: 10px;
             color: #555;
             text-align: right;
             pointer-events: none;
         }
 
-        .model-info .label {
-            color: #666;
-            font-weight: 300;
-        }
-
-        /* PRESETS */
-        .presets-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            overflow-y: auto;
-        }
-
-        .presets-panel h4 {
-            font-size: 12px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .preset-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-        }
-
-        .preset-btn {
-            padding: 12px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .preset-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-
-        .preset-btn .emoji {
-            font-size: 28px;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        .preset-btn .name {
-            font-size: 11px;
-            color: #888;
-            font-weight: 600;
-        }
-
         .status-badge {
             display: inline-block;
-            padding: 3px 14px;
+            padding: 2px 12px;
             border-radius: 12px;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 700;
-            margin-top: 4px;
         }
 
         .status-badge.free {
@@ -399,20 +332,71 @@
             color: #000;
         }
 
-        .topology-info {
-            margin-top: 12px;
-            padding: 10px 14px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+        .presets-panel {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+            overflow-y: auto;
+        }
+
+        .presets-panel h4 {
             font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .preset-btn {
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .preset-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .preset-btn .emoji {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .preset-btn .name {
+            font-size: 10px;
+            color: #888;
+            font-weight: 600;
+        }
+
+        .topology-info {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 10px;
             color: #555;
         }
 
         .topology-info .row {
             display: flex;
             justify-content: space-between;
-            padding: 3px 0;
+            padding: 2px 0;
         }
 
         .topology-info .value {
@@ -440,12 +424,17 @@
                 height: 400px;
             }
         }
+
+        .loading-text {
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
     <div class="container-fluid">
-        <!-- HEADER -->
         <div class="header">
             <h1>🎨 <span>Avatar</span> Studio</h1>
             <div class="header-right">
@@ -454,21 +443,19 @@
             </div>
         </div>
 
-        <!-- LAYOUT PRINCIPAL -->
         <div class="main-layout">
 
-            <!-- PANEL DE OPCIONES -->
             <div class="options-panel">
                 <div class="option-group">
                     <label>👤 Género</label>
                     <div class="style-grid">
-                        <div class="style-btn active" data-option="gender" data-value="male" onclick="selectOption(this)">
+                        <div class="style-btn active" data-option="gender" data-value="male" onclick="actualizarAvatar()">
                             <span class="icon">👨</span> Chico
                         </div>
-                        <div class="style-btn" data-option="gender" data-value="female" onclick="selectOption(this)">
+                        <div class="style-btn" data-option="gender" data-value="female" onclick="actualizarAvatar()">
                             <span class="icon">👩</span> Chica
                         </div>
-                        <div class="style-btn" data-option="gender" data-value="neutral" onclick="selectOption(this)">
+                        <div class="style-btn" data-option="gender" data-value="neutral" onclick="actualizarAvatar()">
                             <span class="icon">🧑</span> Neutro
                         </div>
                     </div>
@@ -477,96 +464,66 @@
                 <div class="option-group">
                     <label>🎨 Color de Piel</label>
                     <div class="color-grid" id="skinColors">
-                        <div class="color-swatch active" style="background:#F5D0B8" data-color="#F5D0B8" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#E8C4A0" data-color="#E8C4A0" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#D4A574" data-color="#D4A574" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#C4956A" data-color="#C4956A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#B0885E" data-color="#B0885E" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B6B4A" data-color="#8B6B4A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#6B4F3A" data-color="#6B4F3A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#4A3524" data-color="#4A3524" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch active" style="background:#F5D0B8" data-color="F5D0B8" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#E8C4A0" data-color="E8C4A0" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#D4A574" data-color="D4A574" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#C4956A" data-color="C4956A" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#B0885E" data-color="B0885E" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#8B6B4A" data-color="8B6B4A" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#6B4F3A" data-color="6B4F3A" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#4A3524" data-color="4A3524" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
                     </div>
                 </div>
 
                 <div class="option-group">
                     <label>💇 Cabello</label>
                     <div class="style-grid">
-                        <div class="style-btn active" data-option="hair" data-value="short" onclick="selectOption(this)">
-                            <span class="icon">👨</span> Corto
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="long" onclick="selectOption(this)">
-                            <span class="icon">🧑</span> Largo
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="spiky" onclick="selectOption(this)">
-                            <span class="icon">⚡</span> Spiky
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="curly" onclick="selectOption(this)">
-                            <span class="icon">🌀</span> Rizado
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="ponytail" onclick="selectOption(this)">
-                            <span class="icon">🎀</span> Cola
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="bald" onclick="selectOption(this)">
-                            <span class="icon">🧑‍🦲</span> Calvo
-                        </div>
+                        <div class="style-btn active" onclick="actualizarAvatar()"><span class="icon">👨</span> Corto</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🧑</span> Largo</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">⚡</span> Spiky</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🌀</span> Rizado</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🎀</span> Cola</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🧑‍🦲</span> Calvo</div>
                     </div>
                 </div>
 
                 <div class="option-group">
                     <label>🎨 Color de Cabello</label>
                     <div class="color-grid" id="hairColors">
-                        <div class="color-swatch active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#00BFFF" data-color="#00BFFF" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FFFFFF" data-color="#FFFFFF" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch active" style="background:#4A2F1A" data-color="4A2F1A" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#000000" data-color="000000" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#8B6914" data-color="8B6914" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#FFD700" data-color="FFD700" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#FF6B35" data-color="FF6B35" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#FF1493" data-color="FF1493" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#00BFFF" data-color="00BFFF" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#FFFFFF" data-color="FFFFFF" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
                     </div>
                 </div>
 
                 <div class="option-group">
                     <label>👕 Color de Ropa</label>
                     <div class="color-grid">
-                        <div class="color-swatch active" style="background:#3B82F6" data-color="#3B82F6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#EF4444" data-color="#EF4444" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#22C55E" data-color="#22C55E" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#F59E0B" data-color="#F59E0B" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B5CF6" data-color="#8B5CF6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#EC4899" data-color="#EC4899" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#14B8A6" data-color="#14B8A6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#1A1A2E" data-color="#1A1A2E" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch active" style="background:#3B82F6" data-color="3B82F6" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#EF4444" data-color="EF4444" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#22C55E" data-color="22C55E" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#F59E0B" data-color="F59E0B" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#8B5CF6" data-color="8B5CF6" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#EC4899" data-color="EC4899" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#14B8A6" data-color="14B8A6" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#1A1A2E" data-color="1A1A2E" onclick="selectColor(this)"><span class="check-mark">✓</span></div>
                     </div>
                 </div>
 
                 <div class="option-group">
                     <label>🎩 Accesorios</label>
                     <div class="style-grid">
-                        <div class="style-btn active" data-option="hat" data-value="none" onclick="selectOption(this)">
-                            <span class="icon">🚫</span> Ninguno
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="tophat" onclick="selectOption(this)">
-                            <span class="icon">🎩</span> Sombrero
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="cap" onclick="selectOption(this)">
-                            <span class="icon">🧢</span> Gorra
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="crown" onclick="selectOption(this)">
-                            <span class="icon">👑</span> Corona
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="none" onclick="selectOption(this)">
-                            <span class="icon">🚫</span> Sin Gafas
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="round" onclick="selectOption(this)">
-                            <span class="icon">👓</span> Redondas
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="sunglasses" onclick="selectOption(this)">
-                            <span class="icon">😎</span> Gafas Sol
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="nerd" onclick="selectOption(this)">
-                            <span class="icon">🤓</span> Nerd
-                        </div>
+                        <div class="style-btn active" onclick="actualizarAvatar()"><span class="icon">🚫</span> Ninguno</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🎩</span> Sombrero</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">🧢</span> Gorra</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">👑</span> Corona</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">👓</span> Redondas</div>
+                        <div class="style-btn" onclick="actualizarAvatar()"><span class="icon">😎</span> Gafas Sol</div>
                     </div>
                 </div>
 
@@ -580,13 +537,14 @@
                     <div class="row"><span>📐 Topología</span></div>
                     <div class="row"><span>Triángulos</span><span class="value">1,997,732</span></div>
                     <div class="row"><span>Vértices</span><span class="value">998,868</span></div>
-                    <div class="row"><span>💾 Memoria</span><span class="value" style="color:#ffd700;">17/20 GB</span></div>
                 </div>
             </div>
 
-            <!-- VISTA 3D -->
+            <!-- VISTA 3D - iFrame de Roblox -->
             <div class="viewer-panel">
-                <div id="canvas-container"></div>
+                <div id="avatarContainer" style="width:100%;height:100%;display:flex;justify-content:center;align-items:center;">
+                    <div class="loading-text">🎨 Cargando personaje...</div>
+                </div>
                 <div class="model-info">
                     <div class="label">🎨 Modelo HD</div>
                     <div class="label">Textura 8K</div>
@@ -594,7 +552,6 @@
                 <div class="viewer-controls">
                     <button class="active" onclick="toggleAutoRotate()">🔄 Auto</button>
                     <button onclick="resetCamera()">🎯 Centrar</button>
-                    <button onclick="toggleWireframe()">🔲 Wireframe</button>
                 </div>
                 <div style="position:absolute;bottom:20px;right:20px;">
                     <span class="status-badge free">🆓 Gratis</span>
@@ -643,8 +600,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="avatar_customizer_3d.js"></script>
 </body>
 </html>
