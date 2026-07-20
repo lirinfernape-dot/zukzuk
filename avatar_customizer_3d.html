@@ -1,626 +1,828 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 Avatar Studio - ZukZuk</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
 
-        body {
-            background: linear-gradient(135deg, #0d0d1a 0%, #1a1a3e 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            min-height: 100vh;
-            overflow: hidden;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .container-fluid {
-            padding: 15px;
-            height: 100vh;
-        }
+<title>ZukZuk Avatar Studio</title>
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.08);
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-        }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
-        .header h1 {
-            font-size: 22px;
-            color: #00d2ff;
-            margin: 0;
-            font-weight: 800;
-        }
+<style>
 
-        .header h1 span {
-            color: #ff6b6b;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+font-family:"Segoe UI",sans-serif;
+background:#202124;
+color:white;
+}
 
-        .btn-volver {
-            background: rgba(255, 255, 255, 0.08);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 6px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 13px;
-            transition: all 0.3s;
-        }
+body{
+display:flex;
+flex-direction:column;
+}
 
-        .btn-volver:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
+/*==========================
+HEADER
+==========================*/
 
-        .coins-display {
-            background: rgba(255, 215, 0, 0.15);
-            padding: 6px 18px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            font-size: 14px;
-            color: #ffd700;
-            font-weight: 600;
-        }
+.header{
 
-        .main-layout {
-            display: grid;
-            grid-template-columns: 340px 1fr 280px;
-            gap: 15px;
-            height: calc(100vh - 80px);
-        }
+height:70px;
 
-        .options-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            overflow-y: auto;
-        }
+background:#2b2d31;
 
-        .options-panel::-webkit-scrollbar {
-            width: 4px;
-        }
+display:flex;
 
-        .options-panel::-webkit-scrollbar-thumb {
-            background: #00d2ff;
-            border-radius: 10px;
-        }
+align-items:center;
 
-        .option-group {
-            margin-bottom: 14px;
-        }
+justify-content:space-between;
 
-        .option-group label {
-            display: block;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #888;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
+padding:0 25px;
 
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            gap: 4px;
-        }
+border-bottom:1px solid #3a3d44;
 
-        .color-swatch {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-        }
+z-index:10;
 
-        .color-swatch:hover {
-            transform: scale(1.15);
-        }
+}
 
-        .color-swatch.active {
-            border-color: #00d2ff;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-        }
+.logo{
 
-        .color-swatch .check-mark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 10px;
-            display: none;
-            text-shadow: 0 0 10px rgba(0,0,0,0.5);
-        }
+font-size:28px;
 
-        .color-swatch.active .check-mark {
-            display: block;
-        }
+font-weight:bold;
 
-        .style-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-        }
+color:#00b7ff;
 
-        .style-btn {
-            padding: 5px 6px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid transparent;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: #aaa;
-            text-align: center;
-            font-size: 10px;
-        }
+}
 
-        .style-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
+.logo span{
 
-        .style-btn.active {
-            border-color: #00d2ff;
-            background: rgba(0, 210, 255, 0.15);
-            color: white;
-        }
+color:#FFD400;
 
-        .style-btn .icon {
-            font-size: 18px;
-            display: block;
-            margin-bottom: 1px;
-        }
+}
 
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 12px;
-        }
+.user-panel{
 
-        .btn-save {
-            padding: 10px;
-            background: linear-gradient(135deg, #00d2ff, #0077b6);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 700;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            grid-column: span 2;
-        }
+display:flex;
 
-        .btn-save:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 25px rgba(0, 210, 255, 0.4);
-        }
+align-items:center;
 
-        .btn-reset {
-            padding: 8px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+gap:20px;
 
-        .btn-reset:hover {
-            background: rgba(255, 255, 255, 0.12);
-        }
+}
 
-        .btn-random {
-            padding: 8px;
-            background: rgba(255, 215, 0, 0.12);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            border-radius: 10px;
-            color: #ffd700;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+.user-coins{
 
-        .btn-random:hover {
-            background: rgba(255, 215, 0, 0.2);
-        }
+background:#3a3d44;
 
-        .viewer-panel {
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            position: relative;
-            overflow: hidden;
-        }
+padding:8px 18px;
 
-        #avatarContainer {
-            width: 100%;
-            height: 100%;
-        }
+border-radius:30px;
 
-        .viewer-controls {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 6px 18px;
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
+font-weight:bold;
 
-        .viewer-controls button {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
-            color: #aaa;
-            padding: 5px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 11px;
-            font-weight: 600;
-        }
+color:#FFD400;
 
-        .viewer-controls button:hover {
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-        }
+}
 
-        .viewer-controls button.active {
-            background: #00d2ff;
-            color: #000;
-        }
+.btn-save{
 
-        .model-info {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 10px;
-            color: #555;
-            text-align: right;
-            pointer-events: none;
-        }
+background:#00b7ff;
 
-        .status-badge {
-            display: inline-block;
-            padding: 2px 12px;
-            border-radius: 12px;
-            font-size: 9px;
-            font-weight: 700;
-        }
+border:none;
 
-        .status-badge.free {
-            background: rgba(0, 210, 255, 0.15);
-            color: #00d2ff;
-        }
+padding:10px 25px;
 
-        .status-badge.premium {
-            background: linear-gradient(135deg, #ffd700, #ff6b00);
-            color: #000;
-        }
+border-radius:8px;
 
-        .presets-panel {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(10px);
-            overflow-y: auto;
-        }
+color:white;
 
-        .presets-panel h4 {
-            font-size: 11px;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
+font-weight:bold;
 
-        .preset-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px;
-        }
+transition:.3s;
 
-        .preset-btn {
-            padding: 10px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
+}
 
-        .preset-btn:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateY(-2px);
-        }
+.btn-save:hover{
 
-        .preset-btn .emoji {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 2px;
-        }
+background:#0097d4;
 
-        .preset-btn .name {
-            font-size: 10px;
-            color: #888;
-            font-weight: 600;
-        }
+}
 
-        .topology-info {
-            margin-top: 10px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 10px;
-            color: #555;
-        }
+/*==========================
+LAYOUT
+==========================*/
 
-        .topology-info .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 2px 0;
-        }
+.main{
 
-        .topology-info .value {
-            color: #888;
-        }
+flex:1;
 
-        @media (max-width: 1200px) {
-            .main-layout {
-                grid-template-columns: 1fr 1fr;
-                height: auto;
-            }
-            .presets-panel {
-                grid-column: span 2;
-            }
-        }
+display:grid;
 
-        @media (max-width: 768px) {
-            .main-layout {
-                grid-template-columns: 1fr;
-            }
-            .presets-panel {
-                grid-column: span 1;
-            }
-            .viewer-panel {
-                height: 400px;
-            }
-        }
-    </style>
+grid-template-columns:
+
+320px
+
+1fr
+
+350px;
+
+overflow:hidden;
+
+}
+
+/*==========================
+LEFT MENU
+==========================*/
+
+.sidebar{
+
+background:#2b2d31;
+
+overflow-y:auto;
+
+padding:20px;
+
+border-right:1px solid #3a3d44;
+
+}
+
+.sidebar h3{
+
+font-size:14px;
+
+text-transform:uppercase;
+
+letter-spacing:2px;
+
+color:#777;
+
+margin-bottom:20px;
+
+}
+
+.category{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px;
+
+margin-bottom:8px;
+
+border-radius:10px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.category:hover{
+
+background:#393c42;
+
+}
+
+.category.active{
+
+background:#0078ff;
+
+}
+
+.category i{
+
+font-size:20px;
+
+}
+
+.category span{
+
+font-size:15px;
+
+}
+
+/*==========================
+CENTER
+==========================*/
+
+.viewer{
+
+position:relative;
+
+background:#16181c;
+
+overflow:hidden;
+
+}
+
+#viewer3d{
+
+width:100%;
+
+height:100%;
+
+}
+
+.toolbar{
+
+position:absolute;
+
+bottom:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+background:#2b2d31;
+
+padding:12px 18px;
+
+border-radius:30px;
+
+display:flex;
+
+gap:12px;
+
+}
+
+.tool{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+background:#444;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.tool:hover{
+
+background:#00b7ff;
+
+}
+
+/*==========================
+RIGHT PANEL
+==========================*/
+
+.options{
+
+background:#2b2d31;
+
+overflow-y:auto;
+
+padding:25px;
+
+border-left:1px solid #3a3d44;
+
+}
+
+.options h2{
+
+font-size:20px;
+
+margin-bottom:20px;
+
+}
+
+.section{
+
+margin-bottom:30px;
+
+}
+
+.section-title{
+
+font-size:13px;
+
+text-transform:uppercase;
+
+letter-spacing:2px;
+
+color:#888;
+
+margin-bottom:12px;
+
+}
+
+.slider-group{
+
+margin-bottom:18px;
+
+}
+
+.slider-group label{
+
+display:flex;
+
+justify-content:space-between;
+
+font-size:13px;
+
+margin-bottom:6px;
+
+}
+
+.slider{
+
+width:100%;
+
+}
+
+.color-grid{
+
+display:grid;
+
+grid-template-columns:repeat(6,1fr);
+
+gap:8px;
+
+}
+
+.color{
+
+width:42px;
+
+height:42px;
+
+border-radius:50%;
+
+cursor:pointer;
+
+border:3px solid transparent;
+
+transition:.2s;
+
+}
+
+.color:hover{
+
+transform:scale(1.1);
+
+}
+
+.color.active{
+
+border:3px solid white;
+
+}
+
+.item-grid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+}
+
+.item{
+
+height:90px;
+
+background:#3a3d44;
+
+border-radius:12px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.item:hover{
+
+background:#00b7ff;
+
+}
+
+.item img{
+
+max-width:60px;
+
+max-height:60px;
+
+}
+
+.gender-buttons{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:10px;
+
+}
+
+.gender{
+
+background:#3a3d44;
+
+padding:12px;
+
+text-align:center;
+
+border-radius:8px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.gender.active{
+
+background:#0078ff;
+
+}
+
+.inventory{
+
+display:grid;
+
+grid-template-columns:repeat(4,1fr);
+
+gap:10px;
+
+}
+
+.inventory-slot{
+
+aspect-ratio:1;
+
+background:#3a3d44;
+
+border-radius:12px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:12px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.inventory-slot:hover{
+
+background:#0078ff;
+
+}
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#555;
+
+border-radius:10px;
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-    <div class="container-fluid">
-        <div class="header">
-            <h1>🎨 <span>Avatar</span> Studio 3D</h1>
-            <div class="header-right">
-                <a href="perfil.html" class="btn-volver">← Volver</a>
-                <span class="coins-display">🪙 <span id="monedasUsuario">0</span></span>
-            </div>
+<div class="header">
+
+<div class="logo">
+
+Zuk<span>Zuk</span>
+
+</div>
+
+<div class="user-panel">
+
+<div class="user-coins">
+
+🪙 500
+
+</div>
+
+<button class="btn-save">
+
+Guardar Avatar
+
+</button>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<!-- PANEL IZQUIERDO -->
+
+<div class="sidebar">
+
+<h3>Personalización</h3>
+
+<div class="category active">
+👤
+<span>Cuerpo</span>
+</div>
+
+<div class="category">
+😀
+<span>Rostro</span>
+</div>
+
+<div class="category">
+💇
+<span>Cabello</span>
+</div>
+
+<div class="category">
+👕
+<span>Ropa</span>
+</div>
+
+<div class="category">
+👖
+<span>Pantalones</span>
+</div>
+
+<div class="category">
+👟
+<span>Zapatos</span>
+</div>
+
+<div class="category">
+🕶
+<span>Accesorios</span>
+</div>
+
+<div class="category">
+🎒
+<span>Mochilas</span>
+</div>
+
+<div class="category">
+🪽
+<span>Alas</span>
+</div>
+
+<div class="category">
+⚔
+<span>Objetos</span>
+</div>
+
+</div>
+
+<!-- VISOR 3D -->
+
+<div class="viewer">
+
+<div id="viewer3d"></div>
+
+<div class="toolbar">
+
+<div class="tool">🔄</div>
+
+<div class="tool">🎥</div>
+
+<div class="tool">➕</div>
+
+<div class="tool">➖</div>
+
+<div class="tool">📷</div>
+
+</div>
+
+</div><!-- PANEL DERECHO -->
+
+<div class="options">
+
+    <h2>Editor del Avatar</h2>
+
+    <!-- GÉNERO -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Género
         </div>
 
-        <div class="main-layout">
+        <div class="gender-buttons">
 
-            <div class="options-panel">
-                <div class="option-group">
-                    <label>👤 Género</label>
-                    <div class="style-grid">
-                        <div class="style-btn active" data-option="gender" data-value="male" onclick="selectOption(this)">
-                            <span class="icon">👨</span> Chico
-                        </div>
-                        <div class="style-btn" data-option="gender" data-value="female" onclick="selectOption(this)">
-                            <span class="icon">👩</span> Chica
-                        </div>
-                        <div class="style-btn" data-option="gender" data-value="neutral" onclick="selectOption(this)">
-                            <span class="icon">🧑</span> Neutro
-                        </div>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <label>🎨 Color de Piel</label>
-                    <div class="color-grid" id="skinColors">
-                        <div class="color-swatch active" style="background:#F5D0B8" data-color="#F5D0B8" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#E8C4A0" data-color="#E8C4A0" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#D4A574" data-color="#D4A574" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#C4956A" data-color="#C4956A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#B0885E" data-color="#B0885E" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B6B4A" data-color="#8B6B4A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#6B4F3A" data-color="#6B4F3A" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#4A3524" data-color="#4A3524" onclick="selectColor(this, 'skin')"><span class="check-mark">✓</span></div>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <label>💇 Cabello</label>
-                    <div class="style-grid">
-                        <div class="style-btn active" data-option="hair" data-value="short" onclick="selectOption(this)">
-                            <span class="icon">👨</span> Corto
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="long" onclick="selectOption(this)">
-                            <span class="icon">🧑</span> Largo
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="spiky" onclick="selectOption(this)">
-                            <span class="icon">⚡</span> Spiky
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="curly" onclick="selectOption(this)">
-                            <span class="icon">🌀</span> Rizado
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="ponytail" onclick="selectOption(this)">
-                            <span class="icon">🎀</span> Cola
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="bald" onclick="selectOption(this)">
-                            <span class="icon">🧑‍🦲</span> Calvo
-                        </div>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <label>🎨 Color de Cabello</label>
-                    <div class="color-grid" id="hairColors">
-                        <div class="color-swatch active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#00BFFF" data-color="#00BFFF" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#FFFFFF" data-color="#FFFFFF" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <label>👕 Color de Ropa</label>
-                    <div class="color-grid">
-                        <div class="color-swatch active" style="background:#3B82F6" data-color="#3B82F6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#EF4444" data-color="#EF4444" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#22C55E" data-color="#22C55E" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#F59E0B" data-color="#F59E0B" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B5CF6" data-color="#8B5CF6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#EC4899" data-color="#EC4899" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#14B8A6" data-color="#14B8A6" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#1A1A2E" data-color="#1A1A2E" onclick="selectColor(this, 'shirt')"><span class="check-mark">✓</span></div>
-                    </div>
-                </div>
-
-                <div class="option-group">
-                    <label>🎩 Accesorios</label>
-                    <div class="style-grid">
-                        <div class="style-btn active" data-option="hat" data-value="none" onclick="selectOption(this)">
-                            <span class="icon">🚫</span> Ninguno
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="tophat" onclick="selectOption(this)">
-                            <span class="icon">🎩</span> Sombrero
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="cap" onclick="selectOption(this)">
-                            <span class="icon">🧢</span> Gorra
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="crown" onclick="selectOption(this)">
-                            <span class="icon">👑</span> Corona
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="none" onclick="selectOption(this)">
-                            <span class="icon">🚫</span> Sin Gafas
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="round" onclick="selectOption(this)">
-                            <span class="icon">👓</span> Redondas
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="sunglasses" onclick="selectOption(this)">
-                            <span class="icon">😎</span> Gafas Sol
-                        </div>
-                        <div class="style-btn" data-option="glasses" data-value="nerd" onclick="selectOption(this)">
-                            <span class="icon">🤓</span> Nerd
-                        </div>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="btn-save" onclick="guardarPersonaje()">💾 Guardar</button>
-                    <button class="btn-reset" onclick="resetPersonaje()">🔄 Reset</button>
-                    <button class="btn-random" onclick="randomPersonaje()">🎲 Aleatorio</button>
-                </div>
-
-                <div class="topology-info">
-                    <div class="row"><span>📐 Topología</span></div>
-                    <div class="row"><span>Triángulos</span><span class="value">1,997,732</span></div>
-                    <div class="row"><span>Vértices</span><span class="value">998,868</span></div>
-                </div>
+            <div class="gender active">
+                Hombre
             </div>
 
-            <!-- VISTA 3D -->
-            <div class="viewer-panel">
-                <div id="avatarContainer"></div>
-                <div class="model-info">
-                    <div class="label">🎨 Modelo HD</div>
-                    <div class="label">Textura 8K</div>
-                </div>
-                <div class="viewer-controls">
-                    <button class="active" onclick="toggleAutoRotate()">🔄 Auto</button>
-                    <button onclick="resetCamera()">🎯 Centrar</button>
-                    <button onclick="toggleWireframe()">🔲 Wireframe</button>
-                </div>
-                <div style="position:absolute;bottom:20px;right:20px;">
-                    <span class="status-badge free">🆓 Gratis</span>
-                    <span class="status-badge premium" style="margin-left:10px;">⭐ HD</span>
-                </div>
+            <div class="gender">
+                Mujer
             </div>
 
-            <!-- PRESETS -->
-            <div class="presets-panel">
-                <h4>🎯 Presets Rápidos</h4>
-                <div class="preset-grid">
-                    <div class="preset-btn" onclick="aplicarPreset('hero')">
-                        <span class="emoji">🦸</span>
-                        <span class="name">Héroe</span>
-                    </div>
-                    <div class="preset-btn" onclick="aplicarPreset('ninja')">
-                        <span class="emoji">🥷</span>
-                        <span class="name">Ninja</span>
-                    </div>
-                    <div class="preset-btn" onclick="aplicarPreset('princess')">
-                        <span class="emoji">👸</span>
-                        <span class="name">Princesa</span>
-                    </div>
-                    <div class="preset-btn" onclick="aplicarPreset('pirate')">
-                        <span class="emoji">🏴‍☠️</span>
-                        <span class="name">Pirata</span>
-                    </div>
-                    <div class="preset-btn" onclick="aplicarPreset('robot')">
-                        <span class="emoji">🤖</span>
-                        <span class="name">Robot</span>
-                    </div>
-                    <div class="preset-btn" onclick="aplicarPreset('alien')">
-                        <span class="emoji">👽</span>
-                        <span class="name">Alien</span>
-                    </div>
-                </div>
-
-                <hr style="border-color:rgba(255,255,255,0.05);margin:12px 0;">
-
-                <div style="text-align:center;">
-                    <p style="font-size:10px;color:#555;">🎨 Modelo HD • Topología optimizada • Textura 8K</p>
-                    <p style="font-size:9px;color:#333;">© ZukZuk Avatar Studio v3.1</p>
-                </div>
+            <div class="gender">
+                Neutro
             </div>
 
         </div>
+
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="avatar_customizer_3d.js"></script>
+    <!-- CUERPO -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Cuerpo
+        </div>
+
+        <div class="slider-group">
+            <label>Altura <span id="heightValue">50</span></label>
+            <input type="range" class="slider" id="height" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Ancho <span id="widthValue">50</span></label>
+            <input type="range" class="slider" id="width" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Cabeza <span id="headValue">50</span></label>
+            <input type="range" class="slider" id="head" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Hombros <span id="shouldersValue">50</span></label>
+            <input type="range" class="slider" id="shoulders" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Cintura <span id="waistValue">50</span></label>
+            <input type="range" class="slider" id="waist" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Caderas <span id="hipsValue">50</span></label>
+            <input type="range" class="slider" id="hips" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Busto <span id="chestValue">15</span></label>
+            <input type="range" class="slider" id="chest" min="0" max="30" value="15">
+        </div>
+
+        <div class="slider-group">
+            <label>Brazos <span id="armsValue">50</span></label>
+            <input type="range" class="slider" id="arms" min="0" max="100" value="50">
+        </div>
+
+        <div class="slider-group">
+            <label>Piernas <span id="legsValue">50</span></label>
+            <input type="range" class="slider" id="legs" min="0" max="100" value="50">
+        </div>
+
+    </div>
+
+    <!-- COLOR DE PIEL -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Color de piel
+        </div>
+
+        <div class="color-grid">
+
+            <div class="color active" style="background:#F7D6BF"></div>
+            <div class="color" style="background:#EDC49A"></div>
+            <div class="color" style="background:#DCA87A"></div>
+            <div class="color" style="background:#B98559"></div>
+            <div class="color" style="background:#7B5335"></div>
+            <div class="color" style="background:#3C2415"></div>
+
+        </div>
+
+    </div>
+
+    <!-- CABELLOS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Cabello
+        </div>
+
+        <div class="item-grid">
+
+            <div class="item">Cabello 1</div>
+            <div class="item">Cabello 2</div>
+            <div class="item">Cabello 3</div>
+            <div class="item">Cabello 4</div>
+            <div class="item">Cabello 5</div>
+            <div class="item">Cabello 6</div>
+
+        </div>
+
+    </div>
+
+    <!-- ROPA -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Ropa
+        </div>
+
+        <div class="item-grid">
+
+            <div class="item">👕</div>
+            <div class="item">🧥</div>
+            <div class="item">🥋</div>
+            <div class="item">🥼</div>
+            <div class="item">👘</div>
+            <div class="item">🎽</div>
+
+        </div>
+
+    </div>
+
+    <!-- ACCESORIOS -->
+
+    <div class="section">
+
+        <div class="section-title">
+            Accesorios
+        </div>
+
+        <div class="inventory">
+
+            <div class="inventory-slot">🎩</div>
+            <div class="inventory-slot">👑</div>
+            <div class="inventory-slot">🧢</div>
+            <div class="inventory-slot">🎧</div>
+
+            <div class="inventory-slot">🕶</div>
+            <div class="inventory-slot">😷</div>
+            <div class="inventory-slot">🎒</div>
+            <div class="inventory-slot">🪽</div>
+
+            <div class="inventory-slot">⚔</div>
+            <div class="inventory-slot">🛡</div>
+            <div class="inventory-slot">✨</div>
+            <div class="inventory-slot">➕</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+
+<script src="avatar_customizer_3d.js"></script>
+
 </body>
+
 </html>
