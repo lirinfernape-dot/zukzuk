@@ -117,16 +117,6 @@
             font-weight: 700;
         }
 
-        .option-group label .badge-premium {
-            background: linear-gradient(135deg, #ffd700, #ff6b00);
-            color: #000;
-            font-size: 8px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 8px;
-            text-transform: uppercase;
-        }
-
         .color-grid {
             display: grid;
             grid-template-columns: repeat(8, 1fr);
@@ -201,7 +191,6 @@
             margin-bottom: 2px;
         }
 
-        /* BOTONES DE ACCIÓN */
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -273,8 +262,8 @@
         .avatar-container {
             position: relative;
             width: 100%;
-            max-width: 500px;
-            height: 550px;
+            max-width: 450px;
+            height: 500px;
             background: radial-gradient(ellipse at center, #1a1a3e 0%, #0d0d1a 100%);
             border-radius: 15px;
             overflow: hidden;
@@ -283,24 +272,12 @@
             align-items: center;
         }
 
-        .avatar-container .model-placeholder {
-            text-align: center;
-            color: #444;
+        /* SVG del personaje */
+        .avatar-svg {
+            width: 80%;
+            height: 85%;
         }
 
-        .avatar-container .model-placeholder .big-icon {
-            font-size: 80px;
-            display: block;
-            margin-bottom: 15px;
-            opacity: 0.3;
-        }
-
-        .avatar-container .model-placeholder p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        /* Controles de vista */
         .view-controls {
             display: flex;
             gap: 10px;
@@ -327,6 +304,25 @@
             background: rgba(0, 210, 255, 0.15);
             border-color: #00d2ff;
             color: #00d2ff;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-top: 5px;
+        }
+
+        .status-badge.free {
+            background: rgba(0, 210, 255, 0.15);
+            color: #00d2ff;
+        }
+
+        .status-badge.premium {
+            background: linear-gradient(135deg, #ffd700, #ff6b00);
+            color: #000;
         }
 
         /* PRESETS */
@@ -377,27 +373,6 @@
             color: #888;
         }
 
-        /* BADGES DE ESTADO */
-        .status-badge {
-            display: inline-block;
-            padding: 3px 12px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        .status-badge.free {
-            background: rgba(0, 210, 255, 0.15);
-            color: #00d2ff;
-        }
-
-        .status-badge.premium {
-            background: linear-gradient(135deg, #ffd700, #ff6b00);
-            color: #000;
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 1200px) {
             .main-layout {
                 grid-template-columns: 1fr 1fr;
@@ -417,21 +392,6 @@
             .avatar-container {
                 height: 400px;
             }
-        }
-
-        /* Animación de carga */
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(0, 210, 255, 0.1);
-            border-top-color: #00d2ff;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -573,19 +533,13 @@
             <!-- VISTA PREVIA -->
             <div class="preview-panel">
                 <div class="avatar-container" id="avatarContainer">
-                    <div class="model-placeholder">
-                        <span class="big-icon">🧑</span>
-                        <p>Personaje 3D</p>
-                        <p style="font-size:12px;color:#444;">Personaliza tu avatar</p>
-                        <div class="loading-spinner" id="loadingSpinner"></div>
-                    </div>
+                    <!-- El SVG del personaje se renderiza aquí -->
                 </div>
 
                 <div class="view-controls">
                     <button class="active" onclick="cambiarVista('front')">👤 Frente</button>
                     <button onclick="cambiarVista('side')">👤 Perfil</button>
                     <button onclick="cambiarVista('back')">👤 Espalda</button>
-                    <button onclick="cambiarVista('3d')">🔄 3D</button>
                 </div>
 
                 <div style="margin-top:15px;text-align:center;width:100%;">
