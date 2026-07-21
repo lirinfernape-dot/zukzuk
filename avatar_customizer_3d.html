@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎨 Avatar Studio - ZukZuk</title>
+    <title>⚔️ Avatar Studio - ZukZuk</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         * {
@@ -30,7 +30,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             margin-bottom: 15px;
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -88,9 +88,9 @@
         }
 
         .options-panel {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 15px;
-            padding: 18px;
+            padding: 15px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(10px);
             overflow-y: auto;
@@ -106,7 +106,7 @@
         }
 
         .option-group {
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .option-group label {
@@ -115,7 +115,7 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             color: #888;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-weight: 700;
         }
 
@@ -126,10 +126,10 @@
         }
 
         .color-swatch {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
-            border: 3px solid transparent;
+            border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
             position: relative;
@@ -141,7 +141,7 @@
 
         .color-swatch.active {
             border-color: #00d2ff;
-            box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
         }
 
         .color-swatch .check-mark {
@@ -150,7 +150,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 10px;
+            font-size: 8px;
             display: none;
             text-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
@@ -166,39 +166,105 @@
         }
 
         .style-btn {
-            padding: 5px 6px;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 6px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
             border: 2px solid transparent;
             cursor: pointer;
             transition: all 0.3s;
             color: #aaa;
             text-align: center;
-            font-size: 10px;
+            font-size: 9px;
         }
 
         .style-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             color: white;
         }
 
         .style-btn.active {
             border-color: #00d2ff;
-            background: rgba(0, 210, 255, 0.15);
+            background: rgba(0, 210, 255, 0.12);
             color: white;
         }
 
         .style-btn .icon {
-            font-size: 18px;
+            font-size: 16px;
             display: block;
             margin-bottom: 1px;
+        }
+
+        .race-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+        }
+
+        .race-btn {
+            padding: 4px 6px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #aaa;
+            text-align: center;
+            font-size: 8px;
+        }
+
+        .race-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+
+        .race-btn.active {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.12);
+            color: #ffd700;
+        }
+
+        .race-btn .icon {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .race-btn .name {
+            font-size: 7px;
+            font-weight: 600;
+        }
+
+        .race-info {
+            margin-top: 6px;
+            padding: 6px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+            border-left: 2px solid #ffd700;
+        }
+
+        .race-info .name {
+            font-weight: bold;
+            color: #ffd700;
+            font-size: 11px;
+        }
+
+        .race-info .desc {
+            font-size: 9px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        .race-info .traits {
+            font-size: 8px;
+            color: #666;
+            margin-top: 2px;
         }
 
         .action-buttons {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 6px;
+            margin-top: 10px;
         }
 
         .btn-save {
@@ -226,7 +292,7 @@
             border-radius: 10px;
             color: white;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -242,7 +308,7 @@
             border-radius: 10px;
             color: #ffd700;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: all 0.3s;
         }
@@ -270,9 +336,9 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
+            gap: 8px;
             background: rgba(0, 0, 0, 0.6);
-            padding: 6px 18px;
+            padding: 6px 16px;
             border-radius: 30px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -282,11 +348,11 @@
             background: rgba(255, 255, 255, 0.08);
             border: none;
             color: #aaa;
-            padding: 5px 16px;
+            padding: 4px 14px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
         }
 
@@ -304,7 +370,7 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 10px;
+            font-size: 9px;
             color: #555;
             text-align: right;
             pointer-events: none;
@@ -312,9 +378,9 @@
 
         .status-badge {
             display: inline-block;
-            padding: 2px 12px;
+            padding: 2px 10px;
             border-radius: 12px;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
         }
 
@@ -329,32 +395,32 @@
         }
 
         .presets-panel {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 15px;
-            padding: 18px;
+            padding: 15px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(10px);
             overflow-y: auto;
         }
 
         .presets-panel h4 {
-            font-size: 11px;
+            font-size: 10px;
             color: #666;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-weight: 700;
         }
 
         .preset-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 6px;
+            gap: 5px;
         }
 
         .preset-btn {
-            padding: 10px;
-            border-radius: 10px;
+            padding: 8px;
+            border-radius: 8px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
             cursor: pointer;
@@ -368,24 +434,24 @@
         }
 
         .preset-btn .emoji {
-            font-size: 24px;
+            font-size: 20px;
             display: block;
             margin-bottom: 2px;
         }
 
         .preset-btn .name {
-            font-size: 10px;
+            font-size: 9px;
             color: #888;
             font-weight: 600;
         }
 
         .topology-info {
-            margin-top: 10px;
-            padding: 8px 12px;
+            margin-top: 8px;
+            padding: 6px 10px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            font-size: 10px;
+            font-size: 9px;
             color: #555;
         }
 
@@ -425,8 +491,9 @@
 <body>
 
     <div class="container-fluid">
+        <!-- HEADER -->
         <div class="header">
-            <h1>🎨 <span>Avatar</span> Studio 3D</h1>
+            <h1>⚔️ <span>Avatar</span> Studio</h1>
             <div class="header-right">
                 <a href="perfil.html" class="btn-volver">← Volver</a>
                 <span class="coins-display">🪙 <span id="monedasUsuario">0</span></span>
@@ -435,19 +502,66 @@
 
         <div class="main-layout">
 
+            <!-- PANEL DE OPCIONES -->
             <div class="options-panel">
+                <!-- RAZA -->
+                <div class="option-group">
+                    <label>🏰 Raza</label>
+                    <div class="race-grid">
+                        <div class="race-btn active" data-race="nord" onclick="selectRace('nord')">
+                            <span class="icon">⚔️</span>
+                            <span class="name">Nord</span>
+                        </div>
+                        <div class="race-btn" data-race="imperial" onclick="selectRace('imperial')">
+                            <span class="icon">🛡️</span>
+                            <span class="name">Imperial</span>
+                        </div>
+                        <div class="race-btn" data-race="high_elf" onclick="selectRace('high_elf')">
+                            <span class="icon">🧝</span>
+                            <span class="name">High Elf</span>
+                        </div>
+                        <div class="race-btn" data-race="wood_elf" onclick="selectRace('wood_elf')">
+                            <span class="icon">🌿</span>
+                            <span class="name">Wood Elf</span>
+                        </div>
+                        <div class="race-btn" data-race="dark_elf" onclick="selectRace('dark_elf')">
+                            <span class="icon">🌙</span>
+                            <span class="name">Dark Elf</span>
+                        </div>
+                        <div class="race-btn" data-race="orc" onclick="selectRace('orc')">
+                            <span class="icon">💪</span>
+                            <span class="name">Orc</span>
+                        </div>
+                        <div class="race-btn" data-race="khajiit" onclick="selectRace('khajiit')">
+                            <span class="icon">🐱</span>
+                            <span class="name">Khajiit</span>
+                        </div>
+                        <div class="race-btn" data-race="redguard" onclick="selectRace('redguard')">
+                            <span class="icon">🗡️</span>
+                            <span class="name">Redguard</span>
+                        </div>
+                    </div>
+                    <div class="race-info" id="raceInfo">
+                        <div class="name" id="raceName">Nord</div>
+                        <div class="desc" id="raceDesc">Famosos por su resistencia al frío y su talento como guerreros</div>
+                        <div class="traits" id="raceTraits">Altos, rubios, guerreros nórdicos</div>
+                    </div>
+                </div>
+
+                <!-- GÉNERO -->
                 <div class="option-group">
                     <label>👤 Género</label>
                     <div class="style-grid">
                         <div class="style-btn active" data-option="gender" data-value="male" onclick="selectOption(this)">
-                            <span class="icon">👨</span> Chico
+                            <span class="icon">👨</span> Hombre
                         </div>
                         <div class="style-btn" data-option="gender" data-value="female" onclick="selectOption(this)">
-                            <span class="icon">👩</span> Chica
+                            <span class="icon">👩</span> Mujer
                         </div>
                     </div>
                 </div>
 
+                <!-- COLOR DE PIEL -->
                 <div class="option-group">
                     <label>🎨 Color de Piel</label>
                     <div class="color-grid" id="skinColors">
@@ -462,6 +576,7 @@
                     </div>
                 </div>
 
+                <!-- CABELLO -->
                 <div class="option-group">
                     <label>💇 Cabello</label>
                     <div class="style-grid">
@@ -471,14 +586,11 @@
                         <div class="style-btn" data-option="hair" data-value="long" onclick="selectOption(this)">
                             <span class="icon">🧑</span> Largo
                         </div>
-                        <div class="style-btn" data-option="hair" data-value="spiky" onclick="selectOption(this)">
-                            <span class="icon">⚡</span> Spiky
+                        <div class="style-btn" data-option="hair" data-value="braided" onclick="selectOption(this)">
+                            <span class="icon">🔄</span> Trenzado
                         </div>
-                        <div class="style-btn" data-option="hair" data-value="curly" onclick="selectOption(this)">
-                            <span class="icon">🌀</span> Rizado
-                        </div>
-                        <div class="style-btn" data-option="hair" data-value="ponytail" onclick="selectOption(this)">
-                            <span class="icon">🎀</span> Cola
+                        <div class="style-btn" data-option="hair" data-value="topknot" onclick="selectOption(this)">
+                            <span class="icon">🎋</span> Moño
                         </div>
                         <div class="style-btn" data-option="hair" data-value="bald" onclick="selectOption(this)">
                             <span class="icon">🧑‍🦲</span> Calvo
@@ -486,12 +598,13 @@
                     </div>
                 </div>
 
+                <!-- COLOR DE CABELLO -->
                 <div class="option-group">
                     <label>🎨 Color de Cabello</label>
                     <div class="color-grid" id="hairColors">
-                        <div class="color-swatch active" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch active" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
+                        <div class="color-swatch" style="background:#4A2F1A" data-color="#4A2F1A" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
                         <div class="color-swatch" style="background:#000000" data-color="#000000" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
-                        <div class="color-swatch" style="background:#8B6914" data-color="#8B6914" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
                         <div class="color-swatch" style="background:#FFD700" data-color="#FFD700" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
                         <div class="color-swatch" style="background:#FF6B35" data-color="#FF6B35" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
                         <div class="color-swatch" style="background:#FF1493" data-color="#FF1493" onclick="selectColor(this, 'hairColor')"><span class="check-mark">✓</span></div>
@@ -500,6 +613,7 @@
                     </div>
                 </div>
 
+                <!-- ROPA -->
                 <div class="option-group">
                     <label>👕 Color de Ropa</label>
                     <div class="color-grid">
@@ -514,32 +628,62 @@
                     </div>
                 </div>
 
+                <!-- ACCESORIOS -->
                 <div class="option-group">
                     <label>🎩 Accesorios</label>
                     <div class="style-grid">
                         <div class="style-btn active" data-option="hat" data-value="none" onclick="selectOption(this)">
                             <span class="icon">🚫</span> Ninguno
                         </div>
-                        <div class="style-btn" data-option="hat" data-value="tophat" onclick="selectOption(this)">
-                            <span class="icon">🎩</span> Sombrero
+                        <div class="style-btn" data-option="hat" data-value="helmet" onclick="selectOption(this)">
+                            <span class="icon">⛑️</span> Casco
                         </div>
-                        <div class="style-btn" data-option="hat" data-value="cap" onclick="selectOption(this)">
-                            <span class="icon">🧢</span> Gorra
-                        </div>
-                        <div class="style-btn" data-option="hat" data-value="crown" onclick="selectOption(this)">
-                            <span class="icon">👑</span> Corona
+                        <div class="style-btn" data-option="hat" data-value="hood" onclick="selectOption(this)">
+                            <span class="icon">🧥</span> Capucha
                         </div>
                         <div class="style-btn" data-option="glasses" data-value="none" onclick="selectOption(this)">
                             <span class="icon">🚫</span> Sin Gafas
                         </div>
-                        <div class="style-btn" data-option="glasses" data-value="round" onclick="selectOption(this)">
-                            <span class="icon">👓</span> Redondas
-                        </div>
                         <div class="style-btn" data-option="glasses" data-value="sunglasses" onclick="selectOption(this)">
                             <span class="icon">😎</span> Gafas Sol
                         </div>
-                        <div class="style-btn" data-option="glasses" data-value="nerd" onclick="selectOption(this)">
-                            <span class="icon">🤓</span> Nerd
+                    </div>
+                </div>
+
+                <!-- BARBA -->
+                <div class="option-group">
+                    <label>🧔 Barba</label>
+                    <div class="style-grid">
+                        <div class="style-btn active" data-option="beard" data-value="none" onclick="selectOption(this)">
+                            <span class="icon">🚫</span> Ninguna
+                        </div>
+                        <div class="style-btn" data-option="beard" data-value="short" onclick="selectOption(this)">
+                            <span class="icon">🧔</span> Corta
+                        </div>
+                        <div class="style-btn" data-option="beard" data-value="long" onclick="selectOption(this)">
+                            <span class="icon">🧔</span> Larga
+                        </div>
+                        <div class="style-btn" data-option="beard" data-value="braided" onclick="selectOption(this)">
+                            <span class="icon">🔄</span> Trenzada
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CICATRICES -->
+                <div class="option-group">
+                    <label>⚔️ Cicatrices</label>
+                    <div class="style-grid">
+                        <div class="style-btn active" data-option="scars" data-value="none" onclick="selectOption(this)">
+                            <span class="icon">🚫</span> Ninguna
+                        </div>
+                        <div class="style-btn" data-option="scars" data-value="cheek" onclick="selectOption(this)">
+                            <span class="icon">😤</span> Mejilla
+                        </div>
+                        <div class="style-btn" data-option="scars" data-value="eye" onclick="selectOption(this)">
+                            <span class="icon">👁️</span> Ojo
+                        </div>
+                        <div class="style-btn" data-option="scars" data-value="forehead" onclick="selectOption(this)">
+                            <span class="icon">🤕</span> Frente
                         </div>
                     </div>
                 </div>
@@ -579,37 +723,45 @@
             <div class="presets-panel">
                 <h4>🎯 Presets Rápidos</h4>
                 <div class="preset-grid">
-                    <div class="preset-btn" onclick="aplicarPreset('hero')">
-                        <span class="emoji">🦸</span>
-                        <span class="name">Héroe</span>
+                    <div class="preset-btn" onclick="aplicarPreset('nord')">
+                        <span class="emoji">⚔️</span>
+                        <span class="name">Nord</span>
                     </div>
-                    <div class="preset-btn" onclick="aplicarPreset('ninja')">
-                        <span class="emoji">🥷</span>
-                        <span class="name">Ninja</span>
+                    <div class="preset-btn" onclick="aplicarPreset('elf')">
+                        <span class="emoji">🧝</span>
+                        <span class="name">Elfo</span>
                     </div>
-                    <div class="preset-btn" onclick="aplicarPreset('princess')">
-                        <span class="emoji">👸</span>
-                        <span class="name">Princesa</span>
+                    <div class="preset-btn" onclick="aplicarPreset('orc')">
+                        <span class="emoji">💪</span>
+                        <span class="name">Orco</span>
                     </div>
-                    <div class="preset-btn" onclick="aplicarPreset('pirate')">
-                        <span class="emoji">🏴‍☠️</span>
-                        <span class="name">Pirata</span>
+                    <div class="preset-btn" onclick="aplicarPreset('khajiit')">
+                        <span class="emoji">🐱</span>
+                        <span class="name">Khajiit</span>
                     </div>
-                    <div class="preset-btn" onclick="aplicarPreset('robot')">
-                        <span class="emoji">🤖</span>
-                        <span class="name">Robot</span>
+                    <div class="preset-btn" onclick="aplicarPreset('imperial')">
+                        <span class="emoji">🛡️</span>
+                        <span class="name">Imperial</span>
                     </div>
-                    <div class="preset-btn" onclick="aplicarPreset('alien')">
-                        <span class="emoji">👽</span>
-                        <span class="name">Alien</span>
+                    <div class="preset-btn" onclick="aplicarPreset('dark_elf')">
+                        <span class="emoji">🌙</span>
+                        <span class="name">Dark Elf</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('redguard')">
+                        <span class="emoji">🗡️</span>
+                        <span class="name">Redguard</span>
+                    </div>
+                    <div class="preset-btn" onclick="aplicarPreset('wood_elf')">
+                        <span class="emoji">🌿</span>
+                        <span class="name">Wood Elf</span>
                     </div>
                 </div>
 
-                <hr style="border-color:rgba(255,255,255,0.05);margin:12px 0;">
+                <hr style="border-color:rgba(255,255,255,0.05);margin:10px 0;">
 
                 <div style="text-align:center;">
-                    <p style="font-size:10px;color:#555;">🎨 Modelo HD • Topología optimizada • Textura 8K</p>
-                    <p style="font-size:9px;color:#333;">© ZukZuk Avatar Studio v3.1</p>
+                    <p style="font-size:9px;color:#555;">⚔️ Modelo HD • Topología optimizada • Textura 8K</p>
+                    <p style="font-size:8px;color:#333;">© ZukZuk Avatar Studio v3.1</p>
                 </div>
             </div>
 
